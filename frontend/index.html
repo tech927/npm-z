@@ -1,264 +1,310 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QUIZZ PURGE - Accueil</title>
-<style>
-:root {
-    --primary: #ff3e3e;
-    --secondary: #0f0f1a;
-    --accent: #00f0ff;
-    --text: #f1f1f1;
-    --bg: #0a0a1f;
-    --glass-bg: rgba(15,15,26,0.6);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Orbitron', sans-serif;
-}
-
-body {
-    background-color: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    background-image:
-        radial-gradient(circle at 20% 20%, rgba(0,255,255,0.1) 0%, transparent 30%),
-        radial-gradient(circle at 80% 80%, rgba(255,62,62,0.1) 0%, transparent 30%);
-}
-
-header {
-    background-color: var(--glass-bg);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(0,255,255,0.2);
-}
-
-.logo {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--primary);
-    text-transform: uppercase;
-}
-
-.logo span {
-    color: var(--accent);
-}
-
-nav a {
-    color: var(--text);
-    text-decoration: none;
-    margin-left: 1.5rem;
-    font-weight: 500;
-    transition: 0.3s;
-}
-
-nav a:hover {
-    color: var(--accent);
-}
-
-.auth-buttons a {
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    margin-left: 1rem;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 1px;
-    transition: 0.3s;
-}
-
-.login-btn {
-    background-color: transparent;
-    border: 1px solid var(--accent);
-    color: var(--accent);
-}
-
-.register-btn {
-    background-color: var(--accent);
-    color: var(--secondary);
-}
-
-main {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.hero {
-    text-align: center;
-    padding: 5rem 0;
-}
-
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    letter-spacing: 2px;
-}
-
-.hero p {
-    font-size: 1.2rem;
-    max-width: 700px;
-    margin: 0 auto 2rem;
-    line-height: 1.6;
-    color: rgba(255,255,255,0.7);
-}
-
-.start-btn {
-    background-color: var(--accent);
-    color: var(--secondary);
-    border: none;
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.start-btn:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 0 20px var(--accent);
-}
-
-.leaderboard {
-    background-color: var(--glass-bg);
-    border-radius: 15px;
-    padding: 2rem;
-    margin-top: 3rem;
-    box-shadow: 0 0 20px rgba(0,255,255,0.2);
-}
-
-.leaderboard h2 {
-    margin-bottom: 1.5rem;
-    color: var(--accent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid rgba(0,255,255,0.1);
-}
-
-th {
-    color: var(--accent);
-}
-
-tr:nth-child(even) {
-    background-color: rgba(0,255,255,0.05);
-}
-
-tr:hover {
-    background-color: rgba(0,255,255,0.1);
-}
-
-.rank {
-    font-weight: bold;
-    color: var(--primary);
-}
-
-footer {
-    text-align: center;
-    padding: 2rem;
-    margin-top: 3rem;
-    color: rgba(255,255,255,0.5);
-    font-size: 0.9rem;
-}
-
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        padding: 1rem;
-    }
-    
-    nav, .auth-buttons {
-        margin-top: 1rem;
-    }
-    
-    .hero h1 {
-        font-size: 2rem;
-    }
-    
-    th, td {
-        padding: 0.5rem;
-        font-size: 0.9rem;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZZ PURGE - Accueil</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
+        :root {
+            --neon-red: #ff3e3e;
+            --neon-pink: #e94560;
+            --dark-bg: #1a1a2e;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --text-light: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--neon-red), var(--neon-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(233, 69, 96, 0.3);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            background: var(--glass-bg);
+            color: var(--text-light);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--neon-red), var(--neon-pink));
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--neon-red), var(--neon-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .start-btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+        
+        .leaderboard-container {
+            margin-top: 4rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            display: none;
+        }
+        
+        .leaderboard-container.visible {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .leaderboard-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--neon-pink);
+            text-align: center;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        th {
+            color: var(--neon-red);
+            font-weight: bold;
+        }
+        
+        tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .rank {
+            font-weight: bold;
+            color: var(--neon-pink);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                width: 95%;
+            }
+        }
+    </style>
 </head>
 <body>
-<header>
-    <div class="logo">QUIZZ <span>PURGE</span></div>
-    <nav>
-        <a href="#">Accueil</a>
-        <a href="#">Classement</a>
-        <a href="#">À propos</a>
-    </nav>
-    <div class="auth-buttons">
-        <a href="login.html" class="login-btn">Connexion</a>
-        <a href="register.html" class="register-btn">Inscription</a>
+    <div class="container">
+        <header>
+            <div class="logo">QUIZZ PURGE</div>
+            <div class="auth-buttons">
+                <button class="btn" onclick="goToPage('/login')">Connexion</button>
+                <button class="btn btn-primary" onclick="goToPage('/register')">Inscription</button>
+            </div>
+        </header>
+        
+        <main>
+            <section class="hero">
+                <h1>Testez vos connaissances</h1>
+                <p>Affrontez notre quiz futuriste et grimpez dans le classement. Chaque bonne réponse vous rapproche de la gloire éternelle.</p>
+                <button class="btn btn-primary start-btn" onclick="goToPage('/login')">Commencer le quizz</button>
+            </section>
+            
+            <section class="leaderboard-container" id="leaderboard">
+                <h2 class="leaderboard-title">Classement des champions</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rang</th>
+                            <th>Joueur</th>
+                            <th>Score</th>
+                            <th>Parties</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="rank">1</td>
+                            <td>CyberNinja</td>
+                            <td>9850</td>
+                            <td>42</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">2</td>
+                            <td>NeonQueen</td>
+                            <td>8720</td>
+                            <td>38</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">3</td>
+                            <td>QuantumRider</td>
+                            <td>7650</td>
+                            <td>35</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+        
+        <footer>
+            <p>© 2023 QUIZZ PURGE - Tous droits réservés</p>
+        </footer>
     </div>
-</header>
 
-<main>
-<section class="hero">
-    <h1>Testez vos connaissances sur la Purge Virtuelle</h1>
-    <p>Affrontez d'autres joueurs dans un quizz intense avec des questions créées par la communauté. Répondez vite - vous n'avez que 15 secondes par question !</p>
-    <button class="start-btn">Commencer le quizz</button>
-</section>
+    <script>
+        // Vérification de l'authentification
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                document.getElementById('leaderboard').classList.add('visible');
+                document.querySelector('.auth-buttons').innerHTML = `
+                    <button class="btn" onclick="goToPage('/dashboard')">Tableau de bord</button>
+                    <button class="btn btn-primary" onclick="logout()">Déconnexion</button>
+                `;
+            }
+        });
 
-<section class="leaderboard">
-    <h2>Classement Top 50</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Rang</th>
-                <th>Joueur</th>
-                <th>Points</th>
-                <th>Parties</th>
-            </tr>
-        </thead>
-        <tbody id="leaderboard-body">
-            <!-- Les détails seront visibles uniquement après connexion -->
-            <tr>
-                <td colspan="4" style="text-align:center; color:var(--accent); padding:2rem;">
-                    Connectez-vous ou inscrivez-vous pour voir le classement complet
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</section>
-</main>
+        function goToPage(url) {
+            document.querySelector('.container').style.animation = 'fadeOut 0.5s ease-out forwards';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+        }
 
-<footer>
-    <p>QUIZZ PURGE &copy; 2025 - MADE IN BY INCONNU BOY</p>
-</footer>
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = '/';
+        }
 
-<script>
-const startBtn = document.querySelector('.start-btn');
-startBtn.addEventListener('click', () => {
-    // Redirection vers la page login si pas connecté
-    window.location.href = 'login.html';
-});
-</script>
+        // Ajout de l'animation fadeOut
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fadeOut {
+                to { opacity: 0; transform: translateY(20px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
