@@ -7,8 +7,9 @@ const rateLimit = require('express-rate-limit');
 const morgan = require('morgan');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
+const path = require('path');
 
-// Import des routes
+// Import des routes API
 const authRoutes = require('./routes/auth');
 const quizRoutes = require('./routes/quiz');
 const userRoutes = require('./routes/user');
@@ -43,11 +44,19 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connecté à MongoDB Atlas'))
   .catch(err => console.error('Erreur de connexion à MongoDB:', err));
 
-// Routes
+// Routes API
 app.use('/api/auth', authRoutes);
 app.use('/api/quiz', quizRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/admin', adminRoutes);
+
+// **Servir les fichiers HTML**
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+// Route par défaut pour index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+});
 
 // Gestion des erreurs
 app.use((err, req, res, next) => {
@@ -55,7 +64,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Erreur serveur' });
 });
 
-// Configuration Socket.io
+// Socket.io
 io.on('connection', (socket) => {
   console.log('Nouvelle connexion Socket.io');
   
