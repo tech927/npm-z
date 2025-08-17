@@ -23,7 +23,8 @@
     "dotenv": "^16.3.1",
     "socket.io": "^4.7.2",
     "validator": "^13.11.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "express-async-handler": "^1.2.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2",
