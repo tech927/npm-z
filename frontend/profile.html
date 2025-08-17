@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZZ PURGE - Profil</title>
+    <style>
+        :root {
+            --primary: #ff3e3e;
+            --secondary: #1a1a2e;
+            --accent: #e94560;
+            --text: #f1f1f1;
+            --bg: #16213e;
+            --card-bg: rgba(26, 26, 46, 0.6);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 62, 62, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 20%);
+        }
+        
+        header {
+            background-color: rgba(26, 26, 46, 0.8);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .back-btn {
+            background-color: transparent;
+            color: var(--text);
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        
+        .profile-info h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .edit-form {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text);
+            border: 1px solid var(--text);
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .history-item {
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .history-score {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .history-date {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-stats {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="back-btn" id="backBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Retour
+        </button>
+        <div class="logo">QUIZZ <span>PURGE</span></div>
+        <div style="width: 100px;"></div> <!-- Pour l'équilibrage -->
+    </header>
+    
+    <main>
+        <div class="profile-header">
+            <div class="avatar" id="userAvatar">U</div>
+            <div class="profile-info">
+                <h1 id="username">Utilisateur</h1>
+                <p>Membre depuis <span id="joinDate">--</span></p>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalPoints">0</div>
+                        <div class="stat-label">Points</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalGames">0</div>
+                        <div class="stat-label">Parties</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="userRank">--</div>
+                        <div class="stat-label">Classement</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title">Informations du compte</h2>
+            <p>Nom d'utilisateur: <span id="displayUsername">--</span></p>
+            
+            <button class="btn btn-outline" id="editUsernameBtn">Modifier le nom d'utilisateur</button>
+            
+            <div class="edit-form" id="usernameForm">
+                <div class="form-group">
+                    <label for="newUsername">Nouveau nom d'utilisateur</label>
+                    <input type="text" id="newUsername" required>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" id="saveUsernameBtn">Enregistrer</button>
+                    <button class="btn btn-outline" id="cancelEditBtn">Annuler</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title">Historique des parties</h2>
+            <div id="historyContainer">
+                <!-- Les parties seront chargées ici -->
+                <div class="history-item">
+                    <div>
+                        <div class="history-score">Score: 8/10</div>
+                        <div class="history-date">12/06/2023</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Charger les données du profil
+        async function loadProfileData() {
+            try {
+                const token = localStorage.getItem('quizzPurgeToken');
+                if (!token) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                const response = await fetch('/api/user/profile', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Erreur de chargement du profil');
+                
+                const profileData = await response.json();
+                
+                // Afficher les données
+                document.getElementById('username').textContent = profileData.username;
+                document.getElementById('displayUsername').textContent = profileData.username;
+                document.getElementById('userAvatar').textContent = profileData.username.charAt(0).toUpperCase();
+                document.getElementById('totalPoints').textContent = profileData.points;
+                document.getElementById('totalGames').textContent = profileData.gamesPlayed;
+                document.getElementById('userRank').textContent = profileData.rank || '--';
+                document.getElementById('joinDate').textContent = new Date(profileData.createdAt).toLocaleDateString();
+                
+                // Charger l'historique
+                loadGameHistory();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        
+        // Charger l'historique des parties
+        async function loadGameHistory() {
+            try {
+                const token = localStorage.getItem('quizzPurgeToken');
+                const response = await fetch('/api/user/history', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Erreur de chargement de l\'historique');
+                
+                const history = await response.json();
+                const container = document.getElementById('historyContainer');
+                
+                if (history.length === 0) {
+                    container.innerHTML = '<p>Aucune partie jouée</p>';
+                    return;
+                }
+                
+                container.innerHTML = history.map(game => `
+                    <div class="history-item">
+                        <div>
+                            <div class="history-score">Score: ${game.score}/10</div>
+                            <div class="history-date">${new Date(game.date).toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        
+        // Écouteurs d'événements
+        document.getElementById('backBtn').addEventListener('click', () => {
+            window.location.href = 'dashboard.html';
+        });
+        
+        document.getElementById('editUsernameBtn').addEventListener('click', () => {
+            document.getElementById('usernameForm').style.display = 'block';
+        });
+        
+        document.getElementById('cancelEditBtn').addEventListener('click', () => {
+            document.getElementById('usernameForm').style.display = 'none';
+        });
+        
+        document.getElementById('saveUsernameBtn').addEventListener('click', async () => {
+            const newUsername = document.getElementById('newUsername').value.trim();
+            
+            if (!newUsername) {
+                alert('Veuillez entrer un nom d\'utilisateur');
+                return;
+            }
+            
+            try {
+                const token = localStorage.getItem('quizzPurgeToken');
+                const response = await fetch('/api/user/update-username', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ username: newUsername })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Erreur de mise à jour');
+                }
+                
+                // Mettre à jour l'affichage
+                document.getElementById('username').textContent = newUsername;
+                document.getElementById('displayUsername').textContent = newUsername;
+                document.getElementById('userAvatar').textContent = newUsername.charAt(0).toUpperCase();
+                document.getElementById('usernameForm').style.display = 'none';
+                document.getElementById('newUsername').value = '';
+                
+                alert('Nom d\'utilisateur mis à jour avec succès');
+            } catch (err) {
+                console.error(err);
+                alert(err.message);
+            }
+        });
+        
+        // Charger les données au chargement de la page
+        window.addEventListener('DOMContentLoaded', loadProfileData);
+    </script>
+</body>
+</html>
