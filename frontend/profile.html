@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,344 +5,314 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUIZZ PURGE - Profil</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-        
         :root {
             --neon-red: #ff3e3e;
-            --neon-pink: #e94560;
-            --dark-bg: #1a1a2e;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --text-light: #ffffff;
+            --dark-purple: #8c3aff;
+            --black-bg: #1a1a2e;
+            --light-text: #f1f1f1;
+            --container-bg: rgba(30, 30, 60, 0.7);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            color: var(--text-light);
+            background: var(--black-bg);
+            color: var(--light-text);
             min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(140, 58, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 62, 62, 0.1) 0%, transparent 20%);
         }
-        
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 0;
-            opacity: 0;
-            animation: fadeIn 0.5s ease-in forwards;
-        }
-        
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-        
+
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            padding: 1.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 2rem;
         }
-        
+
         .logo {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(to right, var(--neon-red), var(--neon-pink));
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #fff, var(--neon-red));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            text-shadow: 0 0 10px rgba(255, 62, 62, 0.3);
         }
-        
-        .user-menu {
+
+        .logo span {
+            color: var(--neon-red);
+            text-shadow: 0 0 10px var(--neon-red);
+        }
+
+        .user-info {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
-        
-        .btn {
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 50px;
+
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-red);
+        }
+
+        .user-info span {
             font-weight: bold;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid var(--neon-red);
+            color: var(--neon-red);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: var(--glass-bg);
-            color: var(--text-light);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+
+        .logout-btn:hover {
+            background: var(--neon-red);
+            color: white;
+            box-shadow: 0 0 15px var(--neon-red);
         }
-        
-        .btn-primary {
-            background: linear-gradient(45deg, var(--neon-red), var(--neon-pink));
+
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
-        
+
         .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            margin-bottom: 3rem;
+            text-align: center;
+            margin-bottom: 2rem;
         }
-        
-        .avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, var(--neon-red), var(--neon-pink));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            font-weight: bold;
-        }
-        
-        .user-info h2 {
+
+        .profile-header h1 {
             font-size: 2rem;
             margin-bottom: 0.5rem;
-            background: linear-gradient(to right, var(--neon-red), var(--neon-pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-weight: 300;
         }
-        
-        .user-info p {
-            opacity: 0.8;
-            margin-bottom: 1rem;
+
+        .profile-header p {
+            color: rgba(255, 255, 255, 0.7);
         }
-        
-        .profile-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
+
+        .avatar-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            position: relative;
         }
-        
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid var(--neon-red);
+            object-fit: cover;
+        }
+
         .profile-card {
-            background: var(--glass-bg);
+            background: var(--container-bg);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease-in-out;
         }
-        
-        .card-title {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--neon-pink);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 0.5rem;
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .form-group {
             margin-bottom: 1.5rem;
         }
-        
+
         label {
             display: block;
             margin-bottom: 0.5rem;
-            opacity: 0.8;
+            color: var(--light-text);
         }
-        
+
         input {
             width: 100%;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 15px;
             border-radius: 8px;
-            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--light-text);
             font-size: 1rem;
+            transition: all 0.3s ease;
         }
-        
-        input:disabled {
-            opacity: 0.6;
+
+        input:focus {
+            outline: none;
+            border-color: var(--neon-red);
+            box-shadow: 0 0 10px rgba(255, 62, 62, 0.5);
         }
-        
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--dark-purple), var(--neon-red));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(140, 58, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--neon-red);
+            color: var(--neon-red);
+        }
+
+        .btn-secondary:hover {
+            background: var(--neon-red);
+            color: white;
+            box-shadow: 0 0 15px var(--neon-red);
+        }
+
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 1rem;
+            margin-top: 2rem;
         }
-        
+
         .stat-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1rem;
-            border-radius: 8px;
             text-align: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
         }
-        
+
         .stat-value {
             font-size: 1.8rem;
             font-weight: bold;
-            color: var(--neon-pink);
-            margin-bottom: 0.3rem;
+            color: var(--neon-red);
         }
-        
+
         .stat-label {
-            font-size: 0.8rem;
-            opacity: 0.7;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
         }
-        
+
+        .error-message {
+            color: var(--neon-red);
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .success-message {
+            color: #4CAF50;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
         @media (max-width: 768px) {
-            .profile-grid {
-                grid-template-columns: 1fr;
+            .profile-card {
+                padding: 1.5rem;
             }
-            
-            .profile-header {
-                flex-direction: column;
-                text-align: center;
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">QUIZZ PURGE</div>
-            <div class="user-menu">
-                <button class="btn" onclick="goToPage('/dashboard')">Tableau de bord</button>
-                <button class="btn btn-primary" onclick="logout()">Déconnexion</button>
+    <header>
+        <div class="logo">
+            <h1>QUIZZ <span>PURGE</span></h1>
+        </div>
+        <div class="user-info">
+            <button class="logout-btn" id="logoutBtn">Déconnexion</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="profile-header">
+            <div class="avatar-container">
+                <img src="https://via.placeholder.com/120" alt="Avatar" class="avatar" id="userAvatar">
             </div>
-        </header>
-        
-        <main>
-            <div class="profile-header">
-                <div class="avatar" id="userAvatar">U</div>
-                <div class="user-info">
-                    <h2 id="username">Utilisateur</h2>
-                    <p>Membre depuis: <span id="joinDate">Janvier 2023</span></p>
-                    <button class="btn" onclick="toggleEdit()">Modifier le profil</button>
+            <h1 id="profileUsername">Nom d'utilisateur</h1>
+            <p>Membre depuis <span id="memberSince">-</span></p>
+        </div>
+
+        <div class="profile-card">
+            <h2>Informations du profil</h2>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" name="username" required>
+                    <div class="error-message" id="usernameError"></div>
+                    <div class="success-message" id="usernameSuccess"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Mettre à jour</button>
+            </form>
+        </div>
+
+        <div class="profile-card">
+            <h2>Statistiques</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalPoints">0</div>
+                    <div class="stat-label">Points</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="gamesPlayed">0</div>
+                    <div class="stat-label">Parties</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="averageScore">0</div>
+                    <div class="stat-label">Moyenne</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="userRank">-</div>
+                    <div class="stat-label">Rang</div>
                 </div>
             </div>
-            
-            <div class="profile-grid">
-                <div class="profile-card">
-                    <h3 class="card-title">Informations personnelles</h3>
-                    <form id="profileForm">
-                        <div class="form-group">
-                            <label>Nom d'utilisateur</label>
-                            <input type="text" id="inputUsername" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" id="inputEmail" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label>Nouveau mot de passe</label>
-                            <input type="password" id="inputPassword" placeholder="Laisser vide pour ne pas changer" disabled>
-                        </div>
-                        <button type="submit" class="btn btn-primary" id="saveBtn" style="display: none;">Enregistrer</button>
-                    </form>
-                </div>
-                
-                <div class="profile-card">
-                    <h3 class="card-title">Statistiques</h3>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">24</div>
-                            <div class="stat-label">Parties jouées</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">1,240</div>
-                            <div class="stat-label">Meilleur score</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">82%</div>
-                            <div class="stat-label">Réussite</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">#15</div>
-                            <div class="stat-label">Classement</div>
-                        </div>
-                    </div>
-                    
-                    <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Dernières parties</h3>
-                    <div style="opacity: 0.7; font-size: 0.9rem;">
-                        <p>12/08 - Score: 850</p>
-                        <p>10/08 - Score: 720</p>
-                        <p>08/08 - Score: 920</p>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
+        </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Vérification de l'authentification
-            const token = localStorage.getItem('token');
-            const username = localStorage.getItem('username');
-            
-            if (!token) {
-                goToPage('/login');
-                return;
-            }
-            
-            // Afficher les informations utilisateur
-            if (username) {
-                document.getElementById('username').textContent = username;
-                document.getElementById('inputUsername').value = username;
-                document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
-            }
-            
-            // Simulation de données utilisateur
-            document.getElementById('inputEmail').value = 'utilisateur@example.com';
-        });
+        <div class="profile-card">
+            <h2>Actions</h2>
+            <button class="btn btn-primary" id="changeAvatarBtn">Changer d'avatar</button>
+            <button class="btn btn-secondary" id="deleteAccountBtn">Supprimer le compte</button>
+        </div>
+    </main>
 
-        function toggleEdit() {
-            const inputs = document.querySelectorAll('#profileForm input');
-            const saveBtn = document.getElementById('saveBtn');
-            
-            inputs.forEach(input => {
-                input.disabled = !input.disabled;
-            });
-            
-            saveBtn.style.display = saveBtn.style.display === 'none' ? 'block' : 'none';
-        }
-
-        document.getElementById('profileForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Modifications enregistrées !');
-            toggleEdit();
-        });
-
-        function goToPage(url) {
-            document.querySelector('.container').style.animation = 'fadeOut 0.5s ease-out forwards';
-            setTimeout(() => {
-                window.location.href = url;
-            }, 500);
-        }
-
-        function logout() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('username');
-            goToPage('/');
-        }
-
-        // Ajout de l'animation fadeOut
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes fadeOut {
-                to { opacity: 0; transform: translateY(20px); }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+    <script src="user.js"></script>
+    <script src="profile.js"></script>
 </body>
 </html>
