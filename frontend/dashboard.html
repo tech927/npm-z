@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZZ PURGE - Dashboard</title>
+    <style>
+        :root {
+            --primary: #ff3e3e;
+            --secondary: #1a1a2e;
+            --accent: #e94560;
+            --text: #f1f1f1;
+            --bg: #16213e;
+            --card-bg: rgba(26, 26, 46, 0.6);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 62, 62, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 20%);
+        }
+        
+        header {
+            background-color: rgba(26, 26, 46, 0.8);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .user-avatar:hover {
+            transform: scale(1.1);
+        }
+        
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .welcome-section {
+            margin-bottom: 2rem;
+        }
+        
+        .welcome-message {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .user-stats {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .quiz-card {
+            grid-column: span 2;
+            text-align: center;
+        }
+        
+        .quiz-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+        }
+        
+        .quiz-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 62, 62, 0.3);
+        }
+        
+        .notification {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+        
+        .notification:hover {
+            background-color: rgba(255, 62, 62, 0.1);
+        }
+        
+        .notification-icon {
+            color: var(--primary);
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .notification-content {
+            flex: 1;
+        }
+        
+        .notification-time {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .admin-message {
+            background-color: rgba(233, 69, 96, 0.1);
+            border-left: 3px solid var(--accent);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-card {
+                grid-column: span 1;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">QUIZZ <span>PURGE</span></div>
+        <div class="user-menu">
+            <div class="user-avatar" id="userAvatar">U</div>
+        </div>
+    </header>
+    
+    <main>
+        <section class="welcome-section">
+            <h1 class="welcome-message">Bienvenue, <span id="username">Utilisateur</span> !</h1>
+            <p class="user-stats">Classement: <span id="userRank">--</span> | Points: <span id="userPoints">0</span></p>
+        </section>
+        
+        <div class="dashboard-grid">
+            <div class="card quiz-card">
+                <div class="card-header">
+                    <h2 class="card-title">QUIZZ PURGE</h2>
+                </div>
+                <p>Testez vos connaissances sur la Purge Virtuelle avec des questions créées par la communauté.</p>
+                <button class="quiz-btn" id="startQuizBtn">Commencer un quizz</button>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Notifications</h2>
+                </div>
+                <div id="notificationsContainer">
+                    <!-- Les notifications seront chargées ici -->
+                    <div class="notification admin-message">
+                        <div class="notification-icon">!</div>
+                        <div class="notification-content">
+                            <p>Message important de l'administrateur</p>
+                            <div class="notification-time">Il y a 2 heures</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Vos statistiques</h2>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" id="gamesPlayed">0</div>
+                        <div class="stat-label">Parties jouées</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="correctAnswers">0</div>
+                        <div class="stat-label">Bonnes réponses</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="averageScore">0</div>
+                        <div class="stat-label">Moyenne / partie</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="questionsAdded">0</div>
+                        <div class="stat-label">Questions ajoutées</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Charger les données utilisateur
+        async function loadUserData() {
+            try {
+                const token = localStorage.getItem('quizzPurgeToken');
+                if (!token) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                const response = await fetch('/api/user/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Erreur de chargement des données');
+                
+                const userData = await response.json();
+                
+                // Afficher les données
+                document.getElementById('username').textContent = userData.username;
+                document.getElementById('userPoints').textContent = userData.points;
+                document.getElementById('gamesPlayed').textContent = userData.gamesPlayed;
+                document.getElementById('userRank').textContent = userData.rank || '--';
+                document.getElementById('userAvatar').textContent = userData.username.charAt(0).toUpperCase();
+                
+                // Charger les notifications
+                loadNotifications();
+                
+                // Charger les stats supplémentaires
+                loadAdditionalStats();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        
+        // Charger les notifications
+        async function loadNotifications() {
+            try {
+                const token = localStorage.getItem('quizzPurgeToken');
+                const response = await fetch('/api/user/notifications', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Erreur de chargement des notifications');
+                
+                const notifications = await response.json();
+                const container = document.getElementById('notificationsContainer');
+                
+                if (notifications.length === 0) {
+                    container.innerHTML = '<p>Aucune notification</p>';
+                    return;
+                }
+                
+                container.innerHTML = notifications.map(notif => `
+                    <div class="notification ${notif.isAdmin ? 'admin-message' : ''}">
+                        <div class="notification-icon">${notif.isAdmin ? '!' : '•'}</div>
+                        <div class="notification-content">
+                            <p>${notif.content}</p>
+                            <div class="notification-time">${new Date(notif.createdAt).toLocaleString()}</div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        
+        // Charger les stats supplémentaires
+        async function loadAdditionalStats() {
+            try {
+                const token = localStorage.getItem('quizzPurgeToken');
+                const response = await fetch('/api/user/stats', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Erreur de chargement des stats');
+                
+                const stats = await response.json();
+                document.getElementById('correctAnswers').textContent = stats.correctAnswers;
+                document.getElementById('averageScore').textContent = stats.averageScore.toFixed(1);
+                document.getElementById('questionsAdded').textContent = stats.questionsAdded;
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        
+        // Écouteurs d'événements
+        document.getElementById('startQuizBtn').addEventListener('click', () => {
+            window.location.href = 'quiz.html';
+        });
+        
+        document.getElementById('userAvatar').addEventListener('click', () => {
+            window.location.href = 'profile.html';
+        });
+        
+        // Charger les données au chargement de la page
+        window.addEventListener('DOMContentLoaded', loadUserData);
+    </script>
+</body>
+                      </html>
