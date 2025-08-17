@@ -11,6 +11,8 @@
             --black-bg: #1a1a2e;
             --light-text: #f1f1f1;
             --container-bg: rgba(30, 30, 60, 0.7);
+            --success-green: #4CAF50;
+            --live-blue: #2196F3;
         }
 
         * {
@@ -57,10 +59,16 @@
             text-shadow: 0 0 10px var(--neon-red);
         }
 
-        .user-info {
+        .user-actions {
             display: flex;
             align-items: center;
             gap: 1rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .user-info img {
@@ -70,24 +78,77 @@
             border: 2px solid var(--neon-red);
         }
 
-        .user-info span {
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            border: none;
+            font-size: 0.9rem;
             font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
 
-        .logout-btn {
+        .btn-login {
             background: transparent;
             border: 1px solid var(--neon-red);
             color: var(--neon-red);
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
 
-        .logout-btn:hover {
+        .btn-login:hover {
             background: var(--neon-red);
             color: white;
             box-shadow: 0 0 15px var(--neon-red);
+        }
+
+        .btn-register {
+            background: var(--neon-red);
+            color: white;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 62, 62, 0.4);
+        }
+
+        .btn-logout {
+            background: transparent;
+            border: 1px solid var(--neon-red);
+            color: var(--neon-red);
+        }
+
+        .btn-logout:hover {
+            background: var(--neon-red);
+            color: white;
+            box-shadow: 0 0 15px var(--neon-red);
+        }
+
+        .btn-success {
+            background: var(--success-green);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-live {
+            background: var(--live-blue);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(33, 150, 243, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0); }
+        }
+
+        .btn-live:hover {
+            transform: translateY(-3px);
         }
 
         main {
@@ -123,21 +184,17 @@
         .actions {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
             margin-top: 2rem;
         }
 
-        .btn {
+        .action-btn {
             padding: 1rem 2rem;
             border-radius: 8px;
-            border: none;
             font-size: 1rem;
             font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
+            min-width: 200px;
         }
 
         .btn-primary {
@@ -197,6 +254,10 @@
             font-weight: bold;
         }
 
+        .hidden {
+            display: none !important;
+        }
+
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -204,9 +265,9 @@
                 text-align: center;
             }
 
-            .actions {
+            .user-actions {
                 flex-direction: column;
-                gap: 1rem;
+                width: 100%;
             }
 
             .btn {
@@ -220,9 +281,15 @@
         <div class="logo">
             <h1>QUIZZ <span>PURGE</span></h1>
         </div>
-        <div class="user-info">
-            <span id="usernameDisplay">Invité</span>
-            <button class="logout-btn" id="logoutBtn">Déconnexion</button>
+        <div class="user-actions">
+            <div class="user-info">
+                <span id="usernameDisplay">Invité</span>
+                <div id="authButtons">
+                    <a href="login.html" class="btn btn-login">Connexion</a>
+                    <a href="register.html" class="btn btn-register">Inscription</a>
+                </div>
+                <button class="btn btn-logout hidden" id="logoutBtn">Déconnexion</button>
+            </div>
         </div>
     </header>
 
@@ -232,8 +299,10 @@
             <p>Testez vos connaissances avec notre quiz futuriste et affrontez d'autres joueurs dans une compétition épique pour la première place !</p>
             
             <div class="actions">
-                <a href="quiz.html" class="btn btn-primary">Commencer le quiz</a>
-                <a href="dashboard.html" class="btn btn-secondary">Tableau de bord</a>
+                <a href="quiz.html" class="action-btn btn-primary">Commencer le quiz</a>
+                <a href="dashboard.html" class="action-btn btn-secondary">Tableau de bord</a>
+                <a href="comments.html" class="action-btn btn-live">Commentaires Live</a>
+                <a href="profile.html" class="action-btn btn-success hidden" id="profileBtn">Mon Profil</a>
             </div>
         </section>
 
@@ -253,6 +322,67 @@
         </div>
     </main>
 
-    <script src="user.js"></script>
+    <script>
+        // Vérifie l'état de connexion au chargement
+        document.addEventListener('DOMContentLoaded', checkAuthStatus);
+
+        // Vérifie régulièrement l'état de connexion (toutes les 30s)
+        setInterval(checkAuthStatus, 30000);
+
+        function checkAuthStatus() {
+            const token = localStorage.getItem('token');
+            const usernameDisplay = document.getElementById('usernameDisplay');
+            const authButtons = document.getElementById('authButtons');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const profileBtn = document.getElementById('profileBtn');
+            const userScore = document.getElementById('userScore');
+            const userRank = document.getElementById('userRank');
+            const gamesPlayed = document.getElementById('gamesPlayed');
+
+            if (token) {
+                // Mode connecté
+                authButtons.classList.add('hidden');
+                logoutBtn.classList.remove('hidden');
+                profileBtn.classList.remove('hidden');
+
+                // Récupère les infos utilisateur
+                fetch('/api/user/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Non autorisé');
+                    return response.json();
+                })
+                .then(data => {
+                    usernameDisplay.textContent = data.username || 'Utilisateur';
+                    userScore.textContent = data.points || 0;
+                    gamesPlayed.textContent = data.gamesPlayed || 0;
+                    userRank.textContent = data.rank || '-';
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    localStorage.removeItem('token');
+                    window.location.reload();
+                });
+            } else {
+                // Mode invité
+                authButtons.classList.remove('hidden');
+                logoutBtn.classList.add('hidden');
+                profileBtn.classList.add('hidden');
+                usernameDisplay.textContent = 'Invité';
+                userScore.textContent = '0';
+                gamesPlayed.textContent = '0';
+                userRank.textContent = '-';
+            }
+        }
+
+        // Gestion de la déconnexion
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('token');
+            window.location.href = 'index.html';
+        });
+    </script>
 </body>
 </html>
