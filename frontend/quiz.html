@@ -5,427 +5,280 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUIZZ PURGE - Quiz</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-        
         :root {
             --neon-red: #ff3e3e;
-            --neon-pink: #e94560;
-            --dark-bg: #1a1a2e;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --text-light: #ffffff;
-            --correct: #00ff88;
-            --incorrect: #ff3e3e;
+            --dark-purple: #8c3aff;
+            --black-bg: #1a1a2e;
+            --light-text: #f1f1f1;
+            --container-bg: rgba(30, 30, 60, 0.7);
+            --correct: #4CAF50;
+            --incorrect: #F44336;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            color: var(--text-light);
+            background: var(--black-bg);
+            color: var(--light-text);
             min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(140, 58, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 62, 62, 0.1) 0%, transparent 20%);
         }
-        
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem 0;
-            opacity: 0;
-            animation: fadeIn 0.5s ease-in forwards;
-        }
-        
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-        
+
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
-            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
             font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(to right, var(--neon-red), var(--neon-pink));
+            font-weight: bold;
+            background: linear-gradient(90deg, #fff, var(--neon-red));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            text-shadow: 0 0 10px rgba(255, 62, 62, 0.3);
         }
-        
-        .quiz-info {
+
+        .logo span {
+            color: var(--neon-red);
+            text-shadow: 0 0 10px var(--neon-red);
+        }
+
+        .quiz-header {
             display: flex;
-            gap: 1.5rem;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
         }
-        
-        .info-item {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 50px;
-            padding: 0.5rem 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
+
+        .progress-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 1rem 0;
+            height: 10px;
         }
-        
-        .info-item span {
-            color: var(--neon-pink);
-            font-weight: bold;
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--dark-purple), var(--neon-red));
+            transition: width 0.3s ease;
         }
-        
+
         .quiz-container {
-            background: var(--glass-bg);
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--container-bg);
             backdrop-filter: blur(10px);
             border-radius: 15px;
-            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 2rem;
+            animation: fadeIn 0.5s ease-in-out;
         }
-        
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .question-container {
             margin-bottom: 2rem;
         }
-        
-        .question-number {
-            color: var(--neon-pink);
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .question-text {
-            font-size: 1.5rem;
+
+        .question {
+            font-size: 1.3rem;
             margin-bottom: 1.5rem;
-            line-height: 1.4;
+            line-height: 1.5;
         }
-        
+
         .options-container {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1rem;
         }
-        
+
         .option {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem;
             border-radius: 8px;
-            padding: 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .option:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--neon-red);
             transform: translateX(5px);
         }
-        
+
+        .option.selected {
+            background: rgba(140, 58, 255, 0.2);
+            border-color: var(--dark-purple);
+        }
+
         .option.correct {
-            background: rgba(0, 255, 136, 0.1);
+            background: rgba(76, 175, 80, 0.2);
             border-color: var(--correct);
         }
-        
+
         .option.incorrect {
-            background: rgba(255, 62, 62, 0.1);
+            background: rgba(244, 67, 54, 0.2);
             border-color: var(--incorrect);
         }
-        
-        .timer-container {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            margin: 1.5rem 0;
-            overflow: hidden;
-        }
-        
-        .timer-bar {
-            height: 100%;
-            width: 100%;
-            background: linear-gradient(to right, var(--neon-red), var(--neon-pink));
-            border-radius: 3px;
-            transition: width 1s linear;
-        }
-        
-        .navigation-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2rem;
-        }
-        
-        .btn {
-            padding: 0.8rem 1.5rem;
+
+        .next-btn {
+            display: block;
+            margin: 2rem auto 0;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
             border: none;
-            border-radius: 50px;
+            background: linear-gradient(45deg, var(--dark-purple), var(--neon-red));
+            color: white;
+            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: var(--glass-bg);
-            color: var(--text-light);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
-        .btn:hover {
+
+        .next-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+            box-shadow: 0 10px 20px rgba(140, 58, 255, 0.3);
         }
-        
-        .btn-primary {
-            background: linear-gradient(45deg, var(--neon-red), var(--neon-pink));
-        }
-        
-        .btn:disabled {
+
+        .next-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
-        
-        .results-container {
+
+        .result-container {
             text-align: center;
-            padding: 2rem 0;
             display: none;
         }
-        
-        .results-title {
+
+        .result-container h2 {
             font-size: 2rem;
             margin-bottom: 1rem;
-            background: linear-gradient(to right, var(--neon-red), var(--neon-pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
         }
-        
-        .score {
-            font-size: 3rem;
-            font-weight: bold;
-            margin: 1.5rem 0;
-            color: var(--neon-pink);
-        }
-        
-        .correct-answers {
+
+        .result-container p {
             font-size: 1.2rem;
             margin-bottom: 2rem;
         }
-        
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--dark-purple), var(--neon-red));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(140, 58, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--neon-red);
+            color: var(--neon-red);
+        }
+
+        .btn-secondary:hover {
+            background: var(--neon-red);
+            color: white;
+            box-shadow: 0 0 15px var(--neon-red);
+        }
+
         @media (max-width: 768px) {
-            .quiz-info {
-                flex-direction: column;
-                gap: 0.5rem;
-                align-items: flex-end;
+            .quiz-container {
+                padding: 1.5rem;
+                margin: 1rem;
             }
-            
-            .question-text {
-                font-size: 1.2rem;
+
+            .question {
+                font-size: 1.1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">QUIZZ PURGE</div>
-            <div class="quiz-info">
-                <div class="info-item">Question: <span id="currentQuestion">1</span>/<span id="totalQuestions">10</span></div>
-                <div class="info-item">Score: <span id="currentScore">0</span></div>
-            </div>
-        </header>
-        
-        <div class="quiz-container" id="quizContainer">
-            <div class="timer-container">
-                <div class="timer-bar" id="timerBar"></div>
-            </div>
-            
-            <div class="question-container">
-                <div class="question-number">Question <span id="questionNum">1</span></div>
-                <h2 class="question-text" id="questionText">Quelle est la capitale de la France ?</h2>
-                
-                <div class="options-container" id="optionsContainer">
-                    <div class="option" data-correct="false">Londres</div>
-                    <div class="option" data-correct="true">Paris</div>
-                    <div class="option" data-correct="false">Berlin</div>
-                    <div class="option" data-correct="false">Madrid</div>
-                </div>
-            </div>
-            
-            <div class="navigation-buttons">
-                <button class="btn" id="quitBtn" onclick="goToPage('/dashboard')">Quitter</button>
-                <button class="btn btn-primary" id="nextBtn" disabled>Suivant</button>
-            </div>
+    <header>
+        <div class="logo">
+            <h1>QUIZZ <span>PURGE</span></h1>
         </div>
-        
-        <div class="results-container" id="resultsContainer">
-            <h2 class="results-title">Quiz Terminé !</h2>
-            <p>Félicitations, vous avez complété le quiz !</p>
-            <div class="score">Score: <span id="finalScore">0</span></div>
-            <p class="correct-answers">Vous avez répondu correctement à <span id="correctCount">0</span> questions sur <span id="totalQ">10</span>.</p>
-            <button class="btn btn-primary" onclick="goToPage('/dashboard')">Retour au tableau de bord</button>
+        <div class="quiz-header">
+            <span id="question-count">Question 1/10</span>
+            <span id="score">Score: 0</span>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar" style="width: 10%"></div>
+    </div>
+
+    <div class="quiz-container">
+        <div class="question-container" id="questionContainer">
+            <div class="question" id="question">Chargement de la question...</div>
+            <div class="options-container" id="optionsContainer">
+                <!-- Les options seront ajoutées ici par JavaScript -->
+            </div>
+            <button class="next-btn" id="nextBtn" disabled>Suivant</button>
+        </div>
+
+        <div class="result-container" id="resultContainer">
+            <h2>Quiz terminé !</h2>
+            <p>Votre score final est: <span id="finalScore">0</span>/10</p>
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="shareBtn">Partager le score</button>
+                <button class="btn btn-secondary" id="restartBtn">Relancer une autre partie</button>
+            </div>
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Vérification de l'authentification
-            const token = localStorage.getItem('token');
-            if (!token) {
-                goToPage('/login');
-                return;
-            }
-            
-            // Initialisation du quiz
-            initQuiz();
-        });
-
-        let currentQuestion = 0;
-        let score = 0;
-        let correctAnswers = 0;
-        let timer;
-        const questions = [
-            {
-                question: "Quelle est la capitale de la France ?",
-                options: ["Londres", "Paris", "Berlin", "Madrid"],
-                correct: 1
-            },
-            {
-                question: "Quel langage s'exécute dans un navigateur web ?",
-                options: ["Java", "C", "Python", "JavaScript"],
-                correct: 3
-            },
-            {
-                question: "Quel est le plus grand océan du monde ?",
-                options: ["Atlantique", "Indien", "Pacifique", "Arctique"],
-                correct: 2
-            }
-        ];
-
-        function initQuiz() {
-            document.getElementById('totalQuestions').textContent = questions.length;
-            showQuestion();
-        }
-
-        function showQuestion() {
-            if (currentQuestion >= questions.length) {
-                showResults();
-                return;
-            }
-            
-            const question = questions[currentQuestion];
-            document.getElementById('questionNum').textContent = currentQuestion + 1;
-            document.getElementById('questionText').textContent = question.question;
-            
-            const optionsContainer = document.getElementById('optionsContainer');
-            optionsContainer.innerHTML = '';
-            
-            question.options.forEach((option, index) => {
-                const optionElement = document.createElement('div');
-                optionElement.classList.add('option');
-                optionElement.textContent = option;
-                optionElement.dataset.correct = index === question.correct;
-                optionElement.addEventListener('click', selectAnswer);
-                optionsContainer.appendChild(optionElement);
-            });
-            
-            document.getElementById('nextBtn').disabled = true;
-            document.getElementById('currentQuestion').textContent = currentQuestion + 1;
-            
-            startTimer();
-        }
-
-        function startTimer() {
-            const timerBar = document.getElementById('timerBar');
-            timerBar.style.width = '100%';
-            timerBar.style.transition = 'width 15s linear';
-            
-            setTimeout(() => {
-                timerBar.style.width = '0%';
-            }, 10);
-            
-            timer = setTimeout(() => {
-                timeUp();
-            }, 15000);
-        }
-
-        function timeUp() {
-            const options = document.querySelectorAll('.option');
-            options.forEach(option => {
-                option.style.opacity = '0.6';
-                if (option.dataset.correct === 'true') {
-                    option.classList.add('correct');
-                }
-            });
-            
-            document.getElementById('nextBtn').disabled = false;
-        }
-
-        function selectAnswer(e) {
-            clearTimeout(timer);
-            
-            const selectedOption = e.target;
-            const correct = selectedOption.dataset.correct === 'true';
-            
-            if (correct) {
-                selectedOption.classList.add('correct');
-                score += 100;
-                correctAnswers++;
-                document.getElementById('currentScore').textContent = score;
-            } else {
-                selectedOption.classList.add('incorrect');
-                // Afficher la bonne réponse
-                document.querySelectorAll('.option').forEach(option => {
-                    if (option.dataset.correct === 'true') {
-                        option.classList.add('correct');
-                    }
-                });
-            }
-            
-            // Désactiver toutes les options
-            document.querySelectorAll('.option').forEach(option => {
-                option.style.pointerEvents = 'none';
-            });
-            
-            document.getElementById('nextBtn').disabled = false;
-        }
-
-        function showResults() {
-            document.getElementById('quizContainer').style.display = 'none';
-            document.getElementById('resultsContainer').style.display = 'block';
-            
-            document.getElementById('finalScore').textContent = score;
-            document.getElementById('correctCount').textContent = correctAnswers;
-            document.getElementById('totalQ').textContent = questions.length;
-        }
-
-        document.getElementById('nextBtn').addEventListener('click', () => {
-            currentQuestion++;
-            showQuestion();
-        });
-
-        function goToPage(url) {
-            document.querySelector('.container').style.animation = 'fadeOut 0.5s ease-out forwards';
-            setTimeout(() => {
-                window.location.href = url;
-            }, 500);
-        }
-
-        // Ajout de l'animation fadeOut
-        const style = document.createElement('style');
-        style.innerHTML = `
-            @keyframes fadeOut {
-                to { opacity: 0; transform: translateY(20px); }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+    <script src="quiz.js"></script>
 </body>
 </html>
