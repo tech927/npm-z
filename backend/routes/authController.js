@@ -1,5 +1,5 @@
-const User = require('../../models/User');
-const { generateToken } = require('../../config/jwt');
+const User = require('../models/User');
+const { generateToken } = require('../config/jwt');
 const asyncHandler = require('express-async-handler');
 
 // @desc    Register new user
