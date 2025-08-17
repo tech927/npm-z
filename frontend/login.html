@@ -3,347 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QUIZZ PURGE - Accueil</title>
+    <title>Purge Quizz - Connexion</title>
     <style>
-        :root {
-            --neon-red: #ff3e3e;
-            --dark-purple: #8c3aff;
-            --black-bg: #1a1a2e;
-            --light-text: #f1f1f1;
-            --container-bg: rgba(30, 30, 60, 0.7);
-            --success-green: #4CAF50;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
         body {
-            background: var(--black-bg);
-            color: var(--light-text);
-            min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(140, 58, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(255, 62, 62, 0.1) 0%, transparent 20%);
-        }
-
-        header {
+            background-color: #1a1a2e;
+            color: #e6e6e6;
+            height: 100vh;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80');
+            background-size: cover;
+            background-position: center;
         }
-
-        .logo {
-            display: flex;
-            align-items: center;
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background-color: rgba(26, 26, 46, 0.9);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
-
-        .logo h1 {
-            font-size: 1.8rem;
-            font-weight: bold;
-            background: linear-gradient(90deg, #fff, var(--neon-red));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 10px rgba(255, 62, 62, 0.3);
+        h1 {
+            color: #f05454;
+            margin-bottom: 1.5rem;
+            text-align: center;
         }
-
-        .logo span {
-            color: var(--neon-red);
-            text-shadow: 0 0 10px var(--neon-red);
+        .form-group {
+            margin-bottom: 1.5rem;
         }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-info img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--neon-red);
-        }
-
-        .user-info span {
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
             font-weight: bold;
         }
-
-        .auth-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.5rem 1rem;
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #30475e;
             border-radius: 5px;
+            background-color: #16213e;
+            color: #e6e6e6;
+            font-size: 1rem;
+        }
+        input:focus {
+            outline: none;
+            border-color: #f05454;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #f05454;
+            color: white;
             border: none;
-            font-size: 0.9rem;
+            border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+        }
+        .btn:hover {
+            background-color: #d93b3b;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        .register-link a {
+            color: #f05454;
             text-decoration: none;
         }
-
-        .btn-login {
-            background: transparent;
-            border: 1px solid var(--neon-red);
-            color: var(--neon-red);
+        .register-link a:hover {
+            text-decoration: underline;
         }
-
-        .btn-login:hover {
-            background: var(--neon-red);
-            color: white;
-            box-shadow: 0 0 15px var(--neon-red);
+        .error {
+            color: #f05454;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
         }
-
-        .btn-register {
-            background: var(--neon-red);
-            color: white;
-        }
-
-        .btn-register:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 62, 62, 0.4);
-        }
-
-        .btn-logout {
-            background: transparent;
-            border: 1px solid var(--neon-red);
-            color: var(--neon-red);
-        }
-
-        .btn-logout:hover {
-            background: var(--neon-red);
-            color: white;
-            box-shadow: 0 0 15px var(--neon-red);
-        }
-
-        .btn-success {
-            background: var(--success-green);
-            color: white;
-        }
-
-        .btn-success:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
-        }
-
-        main {
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .welcome-section {
-            text-align: center;
-            margin-bottom: 3rem;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .welcome-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            font-weight: 300;
-        }
-
-        .welcome-section p {
-            color: rgba(255, 255, 255, 0.7);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        .actions {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .btn-primary {
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            background: linear-gradient(45deg, var(--dark-purple), var(--neon-red));
-            color: white;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(140, 58, 255, 0.3);
-        }
-
-        .btn-secondary {
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            background: transparent;
-            border: 2px solid var(--neon-red);
-            color: var(--neon-red);
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        .btn-secondary:hover {
-            background: var(--neon-red);
-            color: white;
-            box-shadow: 0 0 15px var(--neon-red);
-        }
-
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat-card {
-            background: var(--container-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 1.5rem;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            border-color: var(--neon-red);
-        }
-
-        .stat-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: var(--neon-red);
-        }
-
-        .stat-card p {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            .actions {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .btn {
-                width: 100%;
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <h1>QUIZZ <span>PURGE</span></h1>
-        </div>
-        <div class="user-info">
-            <span id="usernameDisplay">Invité</span>
-            <div class="auth-buttons" id="authButtons">
-                <a href="login.html" class="btn btn-login">Connexion</a>
-                <a href="register.html" class="btn btn-register">Inscription</a>
+    <div class="container">
+        <h1>Connexion</h1>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="username" name="username" required>
+                <div class="error" id="usernameError"></div>
             </div>
-            <button class="btn btn-logout hidden" id="logoutBtn">Déconnexion</button>
-        </div>
-    </header>
-
-    <main>
-        <section class="welcome-section">
-            <h2>Bienvenue sur QUIZZ PURGE</h2>
-            <p>Testez vos connaissances avec notre quiz futuriste et affrontez d'autres joueurs dans une compétition épique pour la première place !</p>
             
-            <div class="actions">
-                <a href="quiz.html" class="btn btn-primary">Commencer le quiz</a>
-                <a href="dashboard.html" class="btn btn-secondary">Tableau de bord</a>
-                <a href="profile.html" class="btn btn-success hidden" id="profileBtn">Mon Profil</a>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required>
+                <div class="error" id="passwordError"></div>
             </div>
-        </section>
-
-        <div class="stats-container">
-            <div class="stat-card">
-                <h3>Votre score</h3>
-                <p id="userScore">0</p>
-            </div>
-            <div class="stat-card">
-                <h3>Votre rang</h3>
-                <p id="userRank">-</p>
-            </div>
-            <div class="stat-card">
-                <h3>Parties jouées</h3>
-                <p id="gamesPlayed">0</p>
-            </div>
+            
+            <button type="submit" class="btn">Se connecter</button>
+        </form>
+        
+        <div class="register-link">
+            Pas encore de compte ? <a href="/register.html">S'inscrire</a>
         </div>
-    </main>
+    </div>
 
     <script>
-        // Vérifie si l'utilisateur est connecté au chargement de la page
-        document.addEventListener('DOMContentLoaded', () => {
-            const token = localStorage.getItem('token');
-            const usernameDisplay = document.getElementById('usernameDisplay');
-            const authButtons = document.getElementById('authButtons');
-            const logoutBtn = document.getElementById('logoutBtn');
-            const profileBtn = document.getElementById('profileBtn');
-
-            if (token) {
-                // Si connecté, on affiche le bouton de déconnexion et on cache les boutons d'authentification
-                authButtons.classList.add('hidden');
-                logoutBtn.classList.remove('hidden');
-                profileBtn.classList.remove('hidden');
-                
-                // On récupère les infos utilisateur
-                fetch('/api/user/me', {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.username) {
-                        usernameDisplay.textContent = data.username;
-                        document.getElementById('userScore').textContent = data.points || 0;
-                        document.getElementById('gamesPlayed').textContent = data.gamesPlayed || 0;
-                        document.getElementById('userRank').textContent = data.rank || '-';
-                    }
-                })
-                .catch(err => {
-                    console.error('Erreur de récupération des infos utilisateur:', err);
-                    localStorage.removeItem('token');
-                    window.location.reload();
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
                 });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    document.getElementById('usernameError').textContent = data.message;
+                    document.getElementById('usernameError').style.display = 'block';
+                    return;
+                }
+                
+                // Stocker le token et rediriger
+                localStorage.setItem('token', data.token);
+                window.location.href = '/dashboard.html';
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Une erreur est survenue');
             }
-
-            // Gestion de la déconnexion
-            logoutBtn.addEventListener('click', () => {
-                localStorage.removeItem('token');
-                window.location.reload();
-            });
         });
     </script>
 </body>
