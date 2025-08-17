@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,240 +6,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Purge Quizz - Accueil</title>
     <style>
-        :root {
-            --primary: #6c5ce7;
-            --secondary: #a29bfe;
-            --dark: #2d3436;
-            --light: #f5f6fa;
-            --danger: #d63031;
-            --success: #00b894;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
         body {
-            background-color: var(--light);
-            color: var(--dark);
-            min-height: 100vh;
+            background-color: #1a1a2e;
+            color: #e6e6e6;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-        }
-        
-        header {
-            background-color: var(--primary);
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-        
-        .tagline {
-            font-style: italic;
-            opacity: 0.8;
-        }
-        
-        nav {
-            display: flex;
             justify-content: center;
-            background-color: var(--dark);
-            padding: 0.5rem;
+            align-items: center;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80');
+            background-size: cover;
+            background-position: center;
         }
-        
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            margin: 0 0.5rem;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        
-        nav a:hover {
-            background-color: var(--primary);
-        }
-        
         .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-            flex: 1;
-        }
-        
-        .hero {
-            background-color: var(--secondary);
-            color: white;
+            width: 90%;
+            max-width: 500px;
+            background-color: rgba(26, 26, 46, 0.9);
             padding: 2rem;
-            border-radius: 8px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             text-align: center;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        
-        .hero h1 {
+        h1 {
+            color: #f05454;
+            margin-bottom: 1.5rem;
             font-size: 2.5rem;
-            margin-bottom: 1rem;
         }
-        
+        p {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
         .btn {
             display: inline-block;
-            background-color: var(--primary);
+            background-color: #f05454;
             color: white;
             padding: 0.8rem 1.5rem;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             text-decoration: none;
             font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
             margin: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 80%;
         }
-        
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            background-color: #d93b3b;
+            transform: translateY(-3px);
         }
-        
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
+        .btn-secondary {
+            background-color: #30475e;
         }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
+        .btn-secondary:hover {
+            background-color: #222f3e;
         }
-        
-        .feature-card {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature-card h3 {
-            color: var(--primary);
+        .logo {
+            width: 100px;
             margin-bottom: 1rem;
         }
-        
         footer {
-            background-color: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 1.5rem;
-            margin-top: auto;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #666;
         }
-        
-        .share-btn {
-            background-color: var(--success);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-        
-        @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-                align-items: center;
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+                padding: 1.5rem;
             }
-            
-            nav a {
-                margin: 0.25rem 0;
-                width: 100%;
-                text-align: center;
-            }
-            
-            .hero h1 {
+            h1 {
                 font-size: 2rem;
+            }
+            .btn {
+                width: 100%;
+                margin: 0.5rem 0;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">Purge Quizz</div>
-        <div class="tagline">Testez vos connaissances sur la Purge Virtuelle</div>
-    </header>
-    
-    <nav>
-        <a href="index.html">Accueil</a>
-        <a href="quiz.html">Jouer</a>
-        <a href="login.html">Connexion</a>
-        <a href="register.html">Inscription</a>
-        <a href="comments.html">Communauté</a>
-    </nav>
-    
     <div class="container">
-        <section class="hero">
-            <h1>Bienvenue sur Purge Quizz</h1>
-            <p>Le jeu de quiz ultime sur l'univers de la Purge Virtuelle. Testez vos connaissances et défiez vos amis !</p>
-            <div>
-                <a href="quiz.html" class="btn">Jouer maintenant</a>
-                <a href="register.html" class="btn btn-outline">Créer un compte</a>
-            </div>
-        </section>
+        <h1>Purge Quizz</h1>
+        <p>Testez vos connaissances sur la Purge Virtuelle et défiez vos amis !</p>
         
-        <section class="features">
-            <div class="feature-card">
-                <h3>Quiz Variés</h3>
-                <p>Des centaines de questions sur l'univers de la Purge Virtuelle, régulièrement mises à jour par la communauté.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Classements</h3>
-                <p>Montez dans le classement en répondant correctement aux questions et en gagnant des points.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Communauté</h3>
-                <p>Partagez vos résultats, discutez avec d'autres fans et proposez vos propres questions.</p>
-            </div>
-        </section>
+        <a href="/register.html" class="btn">S'inscrire</a>
+        <a href="/login.html" class="btn btn-secondary">Se connecter</a>
         
-        <div style="text-align: center; margin-top: 2rem;">
-            <a href="#" class="btn share-btn" onclick="shareGame()">
-                <span>Partager le jeu</span>
-            </a>
-        </div>
+        <footer>by inconnu boy © 2023</footer>
     </div>
-    
-    <footer>
-        <p>Purge Quizz &copy; 2023 - By Inconnu Boy</p>
-    </footer>
-    
-    <script>
-        function shareGame() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Purge Quizz',
-                    text: 'Viens jouer à Purge Quizz, le meilleur quiz sur la Purge Virtuelle!',
-                    url: window.location.href
-                })
-                .then(() => console.log('Partage réussi'))
-                .catch((error) => console.log('Erreur de partage:', error));
-            } else {
-                // Fallback pour les navigateurs qui ne supportent pas l'API de partage
-                const shareUrl = `https://wa.me/?text=Viens+jouer+à+Purge+Quizz+${encodeURIComponent(window.location.href)}`;
-                window.open(shareUrl, '_blank');
-            }
-        }
-    </script>
 </body>
 </html>
