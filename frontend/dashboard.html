@@ -3,261 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QUIZZ PURGE - Tableau de bord</title>
+    <title>Purge Quizz - Tableau de bord</title>
     <style>
-        :root {
-            --neon-red: #ff3e3e;
-            --dark-purple: #8c3aff;
-            --black-bg: #1a1a2e;
-            --light-text: #f1f1f1;
-            --container-bg: rgba(30, 30, 60, 0.7);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
         body {
-            background: var(--black-bg);
-            color: var(--light-text);
+            background-color: #1a1a2e;
+            color: #e6e6e6;
             min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(140, 58, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(255, 62, 62, 0.1) 0%, transparent 20%);
         }
-
         header {
+            background-color: #16213e;
+            padding: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
-
         .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo h1 {
-            font-size: 1.8rem;
+            color: #f05454;
             font-weight: bold;
-            background: linear-gradient(90deg, #fff, var(--neon-red));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 10px rgba(255, 62, 62, 0.3);
+            font-size: 1.5rem;
         }
-
-        .logo span {
-            color: var(--neon-red);
-            text-shadow: 0 0 10px var(--neon-red);
-        }
-
-        .user-info {
+        nav ul {
             display: flex;
-            align-items: center;
-            gap: 1rem;
+            list-style: none;
         }
-
-        .user-info img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--neon-red);
+        nav ul li {
+            margin-left: 1.5rem;
         }
-
-        .user-info span {
-            font-weight: bold;
+        nav ul li a {
+            color: #e6e6e6;
+            text-decoration: none;
+            transition: color 0.3s;
         }
-
-        .logout-btn {
-            background: transparent;
-            border: 1px solid var(--neon-red);
-            color: var(--neon-red);
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        nav ul li a:hover {
+            color: #f05454;
         }
-
-        .logout-btn:hover {
-            background: var(--neon-red);
-            color: white;
-            box-shadow: 0 0 15px var(--neon-red);
-        }
-
-        main {
-            padding: 2rem;
+        .container {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
-
-        .dashboard-title {
+        .welcome {
             text-align: center;
             margin-bottom: 2rem;
-            font-size: 2rem;
-            font-weight: 300;
-            color: var(--light-text);
         }
-
-        .dashboard-grid {
+        .welcome h1 {
+            color: #f05454;
+            margin-bottom: 0.5rem;
+        }
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
-
-        .dashboard-card {
-            background: var(--container-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
+        .stat-card {
+            background-color: #16213e;
             padding: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .dashboard-card h2 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--neon-red);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 0.5rem;
-        }
-
-        .stats-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.8rem;
-        }
-
-        .stats-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .stats-label {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .stats-value {
-            font-weight: bold;
-        }
-
-        .history-item {
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .history-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .history-date {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .history-score {
-            font-weight: bold;
-            color: var(--neon-red);
-        }
-
-        .leaderboard-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding: 0.5rem;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .leaderboard-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .leaderboard-position {
-            font-weight: bold;
-            color: var(--neon-red);
-            width: 30px;
-        }
-
-        .leaderboard-user {
-            flex-grow: 1;
-            margin: 0 1rem;
-        }
-
-        .leaderboard-score {
-            font-weight: bold;
-        }
-
-        .you {
-            background: rgba(140, 58, 255, 0.1);
-            border-left: 3px solid var(--neon-red);
-        }
-
-        .notification-item {
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .notification-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .notification-date {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .notification-content {
-            margin-top: 0.3rem;
-        }
-
-        .admin {
-            color: var(--neon-red);
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
             border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card h3 {
+            color: #f05454;
+            margin-bottom: 0.5rem;
+        }
+        .stat-card p {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .action-btn {
+            background-color: #f05454;
+            color: white;
             border: none;
+            padding: 1rem;
+            border-radius: 8px;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
+            transition: all 0.3s;
             text-align: center;
-            margin-top: 1rem;
+            text-decoration: none;
         }
-
-        .btn-primary {
-            background: linear-gradient(45deg, var(--dark-purple), var(--neon-red));
-            color: white;
-        }
-
-        .btn-primary:hover {
+        .action-btn:hover {
+            background-color: #d93b3b;
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(140, 58, 255, 0.3);
         }
-
+        .share-btn {
+            background-color: #30475e;
+        }
+        .share-btn:hover {
+            background-color: #222f3e;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+            background-color: #16213e;
+            color: #666;
+        }
         @media (max-width: 768px) {
-            .dashboard-grid {
+            nav ul {
+                display: none;
+            }
+            .stats-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -265,64 +130,134 @@
 </head>
 <body>
     <header>
-        <div class="logo">
-            <h1>QUIZZ <span>PURGE</span></h1>
-        </div>
-        <div class="user-info">
-            <span id="usernameDisplay">Invité</span>
-            <button class="logout-btn" id="logoutBtn">Déconnexion</button>
-        </div>
+        <div class="logo">Purge Quizz</div>
+        <nav>
+            <ul>
+                <li><a href="/profile.html">Profil</a></li>
+                <li><a href="/quiz.html">Jouer</a></li>
+                <li><a href="/comments.html">Communauté</a></li>
+                <li><a href="/add-question.html">Ajouter Question</a></li>
+                <li><a href="#" id="logout">Déconnexion</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <main>
-        <h1 class="dashboard-title">Tableau de bord</h1>
-        
-        <div class="dashboard-grid">
-            <div class="dashboard-card">
-                <h2>Vos statistiques</h2>
-                <div class="stats-item">
-                    <span class="stats-label">Score total</span>
-                    <span class="stats-value" id="totalScore">0</span>
-                </div>
-                <div class="stats-item">
-                    <span class="stats-label">Parties jouées</span>
-                    <span class="stats-value" id="totalGames">0</span>
-                </div>
-                <div class="stats-item">
-                    <span class="stats-label">Moyenne</span>
-                    <span class="stats-value" id="averageScore">0</span>
-                </div>
-                <div class="stats-item">
-                    <span class="stats-label">Rang</span>
-                    <span class="stats-value" id="userRank">-</span>
-                </div>
-                <a href="quiz.html" class="btn btn-primary">Nouvelle partie</a>
-            </div>
+    <div class="container">
+        <div class="welcome">
+            <h1>Bienvenue, <span id="username"></span> !</h1>
+            <p>Prêt à tester vos connaissances sur la Purge Virtuelle ?</p>
+        </div>
 
-            <div class="dashboard-card">
-                <h2>Historique des parties</h2>
-                <div id="historyList">
-                    <!-- L'historique sera ajouté ici par JavaScript -->
-                </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Votre Score</h3>
+                <p id="userScore">0</p>
             </div>
-
-            <div class="dashboard-card">
-                <h2>Classement</h2>
-                <div id="leaderboardList">
-                    <!-- Le classement sera ajouté ici par JavaScript -->
-                </div>
+            <div class="stat-card">
+                <h3>Classement</h3>
+                <p id="userRank">0</p>
             </div>
-
-            <div class="dashboard-card">
-                <h2>Notifications</h2>
-                <div id="notificationsList">
-                    <!-- Les notifications seront ajoutées ici par JavaScript -->
-                </div>
+            <div class="stat-card">
+                <h3>Parties Jouées</h3>
+                <p id="gamesPlayed">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Questions Ajoutées</h3>
+                <p id="questionsAdded">0</p>
             </div>
         </div>
-    </main>
 
-    <script src="user.js"></script>
-    <script src="dashboard.js"></script>
+        <div class="actions">
+            <a href="/quiz.html" class="action-btn">Commencer un Quiz</a>
+            <a href="/add-question.html" class="action-btn">Ajouter une Question</a>
+            <button class="action-btn share-btn" id="shareBtn">Inviter un Ami</button>
+        </div>
+    </div>
+
+    <footer>
+        by inconnu boy © 2023
+    </footer>
+
+    <script>
+        // Vérifier si l'utilisateur est connecté
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = '/login.html';
+        }
+
+        // Récupérer les infos utilisateur
+        async function fetchUserData() {
+            try {
+                const response = await fetch('/api/user/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Non autorisé');
+                }
+                
+                const data = await response.json();
+                document.getElementById('username').textContent = data.username;
+                document.getElementById('userScore').textContent = data.points || 0;
+                document.getElementById('userRank').textContent = data.rank || '-';
+                document.getElementById('gamesPlayed').textContent = data.gamesPlayed || 0;
+                
+                // Récupérer le nombre de questions ajoutées
+                const questionsResponse = await fetch('/api/user/stats', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (questionsResponse.ok) {
+                    const stats = await questionsResponse.json();
+                    document.getElementById('questionsAdded').textContent = stats.questionsAdded || 0;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                window.location.href = '/login.html';
+            }
+        }
+
+        // Gestion du bouton de partage
+        document.getElementById('shareBtn').addEventListener('click', () => {
+            const shareUrl = `${window.location.origin}/register.html?ref=${localStorage.getItem('token')}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Rejoins-moi sur Purge Quizz!',
+                    text: 'Viens tester tes connaissances sur la Purge Virtuelle avec moi!',
+                    url: shareUrl
+                }).catch(err => {
+                    console.log('Erreur de partage:', err);
+                    copyToClipboard(shareUrl);
+                });
+            } else {
+                copyToClipboard(shareUrl);
+            }
+        });
+
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Lien copié dans le presse-papiers! Partagez-le avec vos amis.');
+        }
+
+        // Gestion de la déconnexion
+        document.getElementById('logout').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('token');
+            window.location.href = '/login.html';
+        });
+
+        // Charger les données utilisateur
+        fetchUserData();
+    </script>
 </body>
 </html>
