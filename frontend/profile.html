@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,85 +6,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUIZZ PURGE - Profil</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
         :root {
-            --primary: #ff3e3e;
-            --secondary: #1a1a2e;
-            --accent: #e94560;
-            --text: #f1f1f1;
-            --bg: #16213e;
-            --card-bg: rgba(26, 26, 46, 0.6);
+            --neon-red: #ff3e3e;
+            --neon-pink: #e94560;
+            --dark-bg: #1a1a2e;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --text-light: #ffffff;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Orbitron', sans-serif;
         }
         
         body {
-            background-color: var(--bg);
-            color: var(--text);
+            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: var(--text-light);
             min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 62, 62, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 20%);
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
         
         header {
-            background-color: rgba(26, 26, 46, 0.8);
-            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
         }
         
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--neon-red), var(--neon-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
-        .logo span {
-            color: var(--accent);
-        }
-        
-        .back-btn {
-            background-color: transparent;
-            color: var(--text);
-            border: none;
-            font-size: 1rem;
-            cursor: pointer;
+        .user-menu {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
         }
         
-        main {
-            padding: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--glass-bg);
+            color: var(--text-light);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--neon-red), var(--neon-pink));
         }
         
         .profile-header {
             display: flex;
             align-items: center;
             gap: 2rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
         
         .avatar {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            background-color: var(--primary);
+            background: linear-gradient(45deg, var(--neon-red), var(--neon-pink));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -91,327 +115,235 @@
             font-weight: bold;
         }
         
-        .profile-info h1 {
+        .user-info h2 {
             font-size: 2rem;
             margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--neon-red), var(--neon-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
-        .profile-stats {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1rem;
+        .user-info p {
+            opacity: 0.8;
+            margin-bottom: 1rem;
         }
         
-        .stat-item {
-            text-align: center;
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
         }
         
-        .stat-number {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        .profile-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .card-title {
-            font-size: 1.2rem;
-            color: var(--primary);
+            font-size: 1.5rem;
             margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
+            color: var(--neon-pink);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .edit-form {
-            display: none;
-            margin-top: 1rem;
+            padding-bottom: 0.5rem;
         }
         
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         
         label {
             display: block;
             margin-bottom: 0.5rem;
-            color: rgba(255, 255, 255, 0.8);
+            opacity: 0.8;
         }
         
         input {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text);
-        }
-        
-        .form-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .btn {
-            padding: 0.7rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-        }
-        
-        .btn-outline {
-            background-color: transparent;
-            color: var(--text);
-            border: 1px solid var(--text);
-        }
-        
-        .btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-        
-        .history-item {
             padding: 1rem;
-            margin-bottom: 0.8rem;
-            background-color: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 1rem;
         }
         
-        .history-score {
+        input:disabled {
+            opacity: 0.6;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
             font-weight: bold;
-            color: var(--primary);
+            color: var(--neon-pink);
+            margin-bottom: 0.3rem;
         }
         
-        .history-date {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9rem;
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
         }
         
         @media (max-width: 768px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .profile-header {
                 flex-direction: column;
                 text-align: center;
-            }
-            
-            .profile-stats {
-                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <button class="back-btn" id="backBtn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            Retour
-        </button>
-        <div class="logo">QUIZZ <span>PURGE</span></div>
-        <div style="width: 100px;"></div> <!-- Pour l'équilibrage -->
-    </header>
-    
-    <main>
-        <div class="profile-header">
-            <div class="avatar" id="userAvatar">U</div>
-            <div class="profile-info">
-                <h1 id="username">Utilisateur</h1>
-                <p>Membre depuis <span id="joinDate">--</span></p>
-                
-                <div class="profile-stats">
-                    <div class="stat-item">
-                        <div class="stat-number" id="totalPoints">0</div>
-                        <div class="stat-label">Points</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="totalGames">0</div>
-                        <div class="stat-label">Parties</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="userRank">--</div>
-                        <div class="stat-label">Classement</div>
-                    </div>
+    <div class="container">
+        <header>
+            <div class="logo">QUIZZ PURGE</div>
+            <div class="user-menu">
+                <button class="btn" onclick="goToPage('/dashboard')">Tableau de bord</button>
+                <button class="btn btn-primary" onclick="logout()">Déconnexion</button>
+            </div>
+        </header>
+        
+        <main>
+            <div class="profile-header">
+                <div class="avatar" id="userAvatar">U</div>
+                <div class="user-info">
+                    <h2 id="username">Utilisateur</h2>
+                    <p>Membre depuis: <span id="joinDate">Janvier 2023</span></p>
+                    <button class="btn" onclick="toggleEdit()">Modifier le profil</button>
                 </div>
             </div>
-        </div>
-        
-        <div class="card">
-            <h2 class="card-title">Informations du compte</h2>
-            <p>Nom d'utilisateur: <span id="displayUsername">--</span></p>
             
-            <button class="btn btn-outline" id="editUsernameBtn">Modifier le nom d'utilisateur</button>
-            
-            <div class="edit-form" id="usernameForm">
-                <div class="form-group">
-                    <label for="newUsername">Nouveau nom d'utilisateur</label>
-                    <input type="text" id="newUsername" required>
+            <div class="profile-grid">
+                <div class="profile-card">
+                    <h3 class="card-title">Informations personnelles</h3>
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label>Nom d'utilisateur</label>
+                            <input type="text" id="inputUsername" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="inputEmail" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Nouveau mot de passe</label>
+                            <input type="password" id="inputPassword" placeholder="Laisser vide pour ne pas changer" disabled>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="saveBtn" style="display: none;">Enregistrer</button>
+                    </form>
                 </div>
-                <div class="form-actions">
-                    <button class="btn btn-primary" id="saveUsernameBtn">Enregistrer</button>
-                    <button class="btn btn-outline" id="cancelEditBtn">Annuler</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="card">
-            <h2 class="card-title">Historique des parties</h2>
-            <div id="historyContainer">
-                <!-- Les parties seront chargées ici -->
-                <div class="history-item">
-                    <div>
-                        <div class="history-score">Score: 8/10</div>
-                        <div class="history-date">12/06/2023</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-    
-    <script>
-        // Charger les données du profil
-        async function loadProfileData() {
-            try {
-                const token = localStorage.getItem('quizzPurgeToken');
-                if (!token) {
-                    window.location.href = 'login.html';
-                    return;
-                }
                 
-                const response = await fetch('/api/user/profile', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                
-                if (!response.ok) throw new Error('Erreur de chargement du profil');
-                
-                const profileData = await response.json();
-                
-                // Afficher les données
-                document.getElementById('username').textContent = profileData.username;
-                document.getElementById('displayUsername').textContent = profileData.username;
-                document.getElementById('userAvatar').textContent = profileData.username.charAt(0).toUpperCase();
-                document.getElementById('totalPoints').textContent = profileData.points;
-                document.getElementById('totalGames').textContent = profileData.gamesPlayed;
-                document.getElementById('userRank').textContent = profileData.rank || '--';
-                document.getElementById('joinDate').textContent = new Date(profileData.createdAt).toLocaleDateString();
-                
-                // Charger l'historique
-                loadGameHistory();
-            } catch (err) {
-                console.error(err);
-            }
-        }
-        
-        // Charger l'historique des parties
-        async function loadGameHistory() {
-            try {
-                const token = localStorage.getItem('quizzPurgeToken');
-                const response = await fetch('/api/user/history', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                
-                if (!response.ok) throw new Error('Erreur de chargement de l\'historique');
-                
-                const history = await response.json();
-                const container = document.getElementById('historyContainer');
-                
-                if (history.length === 0) {
-                    container.innerHTML = '<p>Aucune partie jouée</p>';
-                    return;
-                }
-                
-                container.innerHTML = history.map(game => `
-                    <div class="history-item">
-                        <div>
-                            <div class="history-score">Score: ${game.score}/10</div>
-                            <div class="history-date">${new Date(game.date).toLocaleDateString()}</div>
+                <div class="profile-card">
+                    <h3 class="card-title">Statistiques</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">24</div>
+                            <div class="stat-label">Parties jouées</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">1,240</div>
+                            <div class="stat-label">Meilleur score</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">82%</div>
+                            <div class="stat-label">Réussite</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">#15</div>
+                            <div class="stat-label">Classement</div>
                         </div>
                     </div>
-                `).join('');
-            } catch (err) {
-                console.error(err);
-            }
-        }
-        
-        // Écouteurs d'événements
-        document.getElementById('backBtn').addEventListener('click', () => {
-            window.location.href = 'dashboard.html';
-        });
-        
-        document.getElementById('editUsernameBtn').addEventListener('click', () => {
-            document.getElementById('usernameForm').style.display = 'block';
-        });
-        
-        document.getElementById('cancelEditBtn').addEventListener('click', () => {
-            document.getElementById('usernameForm').style.display = 'none';
-        });
-        
-        document.getElementById('saveUsernameBtn').addEventListener('click', async () => {
-            const newUsername = document.getElementById('newUsername').value.trim();
+                    
+                    <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Dernières parties</h3>
+                    <div style="opacity: 0.7; font-size: 0.9rem;">
+                        <p>12/08 - Score: 850</p>
+                        <p>10/08 - Score: 720</p>
+                        <p>08/08 - Score: 920</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Vérification de l'authentification
+            const token = localStorage.getItem('token');
+            const username = localStorage.getItem('username');
             
-            if (!newUsername) {
-                alert('Veuillez entrer un nom d\'utilisateur');
+            if (!token) {
+                goToPage('/login');
                 return;
             }
             
-            try {
-                const token = localStorage.getItem('quizzPurgeToken');
-                const response = await fetch('/api/user/update-username', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ username: newUsername })
-                });
-                
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.message || 'Erreur de mise à jour');
-                }
-                
-                // Mettre à jour l'affichage
-                document.getElementById('username').textContent = newUsername;
-                document.getElementById('displayUsername').textContent = newUsername;
-                document.getElementById('userAvatar').textContent = newUsername.charAt(0).toUpperCase();
-                document.getElementById('usernameForm').style.display = 'none';
-                document.getElementById('newUsername').value = '';
-                
-                alert('Nom d\'utilisateur mis à jour avec succès');
-            } catch (err) {
-                console.error(err);
-                alert(err.message);
+            // Afficher les informations utilisateur
+            if (username) {
+                document.getElementById('username').textContent = username;
+                document.getElementById('inputUsername').value = username;
+                document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
             }
+            
+            // Simulation de données utilisateur
+            document.getElementById('inputEmail').value = 'utilisateur@example.com';
         });
-        
-        // Charger les données au chargement de la page
-        window.addEventListener('DOMContentLoaded', loadProfileData);
+
+        function toggleEdit() {
+            const inputs = document.querySelectorAll('#profileForm input');
+            const saveBtn = document.getElementById('saveBtn');
+            
+            inputs.forEach(input => {
+                input.disabled = !input.disabled;
+            });
+            
+            saveBtn.style.display = saveBtn.style.display === 'none' ? 'block' : 'none';
+        }
+
+        document.getElementById('profileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Modifications enregistrées !');
+            toggleEdit();
+        });
+
+        function goToPage(url) {
+            document.querySelector('.container').style.animation = 'fadeOut 0.5s ease-out forwards';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            goToPage('/');
+        }
+
+        // Ajout de l'animation fadeOut
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fadeOut {
+                to { opacity: 0; transform: translateY(20px); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
