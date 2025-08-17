@@ -6,246 +6,323 @@
     <title>QUIZZ PURGE - Admin</title>
     <style>
         :root {
-            --primary: #ff3e3e;
-            --secondary: #1a1a2e;
-            --accent: #e94560;
-            --text: #f1f1f1;
-            --bg: #16213e;
-            --card-bg: rgba(26, 26, 46, 0.6);
+            --neon-red: #ff3e3e;
+            --dark-purple: #8c3aff;
+            --black-bg: #1a1a2e;
+            --light-text: #f1f1f1;
+            --container-bg: rgba(30, 30, 60, 0.7);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
-            background-color: var(--bg);
-            color: var(--text);
+            background: var(--black-bg);
+            color: var(--light-text);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 62, 62, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 20%);
+                radial-gradient(circle at 10% 20%, rgba(140, 58, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 62, 62, 0.1) 0%, transparent 20%);
         }
-        
-        .admin-container {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 2rem;
-            width: 100%;
-            max-width: 600px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #fff, var(--neon-red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(255, 62, 62, 0.3);
+        }
+
+        .logo span {
+            color: var(--neon-red);
+            text-shadow: 0 0 10px var(--neon-red);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-red);
+        }
+
+        .user-info span {
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid var(--neon-red);
+            color: var(--neon-red);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: var(--neon-red);
+            color: white;
+            box-shadow: 0 0 15px var(--neon-red);
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-title {
             text-align: center;
             margin-bottom: 2rem;
             font-size: 2rem;
+            font-weight: 300;
+            color: var(--light-text);
+        }
+
+        .admin-subtitle {
+            color: var(--neon-red);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .admin-card {
+            background: var(--container-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stats-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+        }
+
+        .stats-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .stats-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .stats-value {
             font-weight: bold;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
         }
-        
-        .logo span {
-            color: var(--accent);
-        }
-        
-        h1 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: var(--text);
-        }
-        
+
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
-        
+
         label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--light-text);
         }
-        
-        input, textarea {
+
+        input, textarea, select {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 10px 15px;
+            border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text);
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--light-text);
             font-size: 1rem;
+            transition: all 0.3s ease;
         }
-        
+
         textarea {
-            min-height: 150px;
+            min-height: 100px;
             resize: vertical;
         }
-        
-        input:focus, textarea:focus {
+
+        input:focus, textarea:focus, select:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--neon-red);
+            box-shadow: 0 0 10px rgba(255, 62, 62, 0.5);
         }
-        
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background-color: var(--primary);
-            color: white;
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
             border: none;
-            border-radius: 4px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: all 0.3s ease;
         }
-        
-        .submit-btn:hover {
-            background-color: var(--accent);
-            transform: translateY(-2px);
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--dark-purple), var(--neon-red));
+            color: white;
         }
-        
-        .error-message {
-            color: var(--primary);
-            text-align: center;
-            margin-top: 1rem;
-            display: none;
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(140, 58, 255, 0.3);
         }
-        
-        .success-message {
-            color: #4caf50;
-            text-align: center;
-            margin-top: 1rem;
-            display: none;
+
+        .btn-danger {
+            background: transparent;
+            border: 2px solid var(--neon-red);
+            color: var(--neon-red);
         }
-        
-        .admin-stats {
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+        .btn-danger:hover {
+            background: var(--neon-red);
+            color: white;
+            box-shadow: 0 0 15px var(--neon-red);
         }
-        
-        .stat-item {
-            margin-bottom: 1rem;
+
+        .users-list {
+            max-height: 400px;
+            overflow-y: auto;
         }
-        
-        .stat-label {
+
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .user-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .user-name {
             font-weight: bold;
-            color: var(--primary);
+        }
+
+        .user-points {
+            color: var(--neon-red);
+        }
+
+        .error-message {
+            color: var(--neon-red);
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .success-message {
+            color: #4CAF50;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="admin-container">
-        <div class="logo">QUIZZ <span>PURGE</span></div>
-        <h1>Panneau d'administration</h1>
+    <header>
+        <div class="logo">
+            <h1>QUIZZ <span>PURGE</span></h1>
+        </div>
+        <div class="user-info">
+            <span id="usernameDisplay">Admin</span>
+            <button class="logout-btn" id="logoutBtn">Déconnexion</button>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="admin-title">Panneau d'administration</h1>
         
-        <div class="error-message" id="errorMessage"></div>
-        <div class="success-message" id="successMessage"></div>
-        
-        <form id="adminForm">
-            <div class="form-group">
-                <label for="adminPassword">Mot de passe admin</label>
-                <input type="password" id="adminPassword" required>
+        <div class="admin-grid">
+            <div class="admin-card">
+                <h2 class="admin-subtitle">Statistiques globales</h2>
+                <div class="stats-item">
+                    <span class="stats-label">Utilisateurs</span>
+                    <span class="stats-value" id="totalUsers">0</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-label">Questions</span>
+                    <span class="stats-value" id="totalQuestions">0</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-label">Parties jouées</span>
+                    <span class="stats-value" id="totalGames">0</span>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label for="globalMessage">Message global</label>
-                <textarea id="globalMessage" placeholder="Ce message sera visible par tous les utilisateurs dans leur dashboard"></textarea>
+
+            <div class="admin-card">
+                <h2 class="admin-subtitle">Envoyer un message</h2>
+                <form id="messageForm">
+                    <div class="form-group">
+                        <label for="message">Message global</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Envoyer à tous</button>
+                    <div class="error-message" id="messageError"></div>
+                    <div class="success-message" id="messageSuccess"></div>
+                </form>
             </div>
-            
-            <button type="submit" class="submit-btn">Envoyer le message</button>
-        </form>
-        
-        <div class="admin-stats">
-            <div class="stat-item">
-                <div class="stat-label">Utilisateurs inscrits:</div>
-                <div id="usersCount">--</div>
+
+            <div class="admin-card">
+                <h2 class="admin-subtitle">Top utilisateurs</h2>
+                <div class="users-list" id="topUsersList">
+                    <!-- Les utilisateurs seront ajoutés ici par JavaScript -->
+                </div>
             </div>
-            <div class="stat-item">
-                <div class="stat-label">Questions en base:</div>
-                <div id="questionsCount">--</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-label">Parties jouées:</div>
-                <div id="gamesCount">--</div>
+
+            <div class="admin-card">
+                <h2 class="admin-subtitle">Actions rapides</h2>
+                <button class="btn btn-primary" id="addQuestionBtn">Ajouter une question</button>
+                <button class="btn btn-danger" id="resetStatsBtn" style="margin-top: 1rem;">Réinitialiser les stats</button>
             </div>
         </div>
-    </div>
-    
-    <script>
-        document.getElementById('adminForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const password = document.getElementById('adminPassword').value;
-            const message = document.getElementById('globalMessage').value.trim();
-            
-            const errorMessage = document.getElementById('errorMessage');
-            const successMessage = document.getElementById('successMessage');
-            
-            if (password !== "inconnu-tech-web") {
-                errorMessage.textContent = 'Mot de passe admin incorrect';
-                errorMessage.style.display = 'block';
-                successMessage.style.display = 'none';
-                return;
-            }
-            
-            if (!message) {
-                errorMessage.textContent = 'Veuillez entrer un message';
-                errorMessage.style.display = 'block';
-                successMessage.style.display = 'none';
-                return;
-            }
-            
-            try {
-                const response = await fetch('/api/admin/send-message', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ message })
-                });
-                
-                if (!response.ok) throw new Error('Erreur d\'envoi du message');
-                
-                successMessage.textContent = 'Message envoyé à tous les utilisateurs !';
-                successMessage.style.display = 'block';
-                errorMessage.style.display = 'none';
-                
-                // Charger les stats
-                loadAdminStats();
-            } catch (err) {
-                errorMessage.textContent = err.message;
-                errorMessage.style.display = 'block';
-                successMessage.style.display = 'none';
-                console.error(err);
-            }
-        });
-        
-        // Charger les statistiques admin
-        async function loadAdminStats() {
-            try {
-                const response = await fetch('/api/admin/stats');
-                if (!response.ok) throw new Error('Erreur de chargement des stats');
-                
-                const stats = await response.json();
-                document.getElementById('usersCount').textContent = stats.usersCount;
-                document.getElementById('questionsCount').textContent = stats.questionsCount;
-                document.getElementById('gamesCount').textContent = stats.gamesCount;
-            } catch (err) {
-                console.error(err);
-            }
-        }
-        
-        // Charger les stats au démarrage
-        window.addEventListener('DOMContentLoaded', loadAdminStats);
-    </script>
+    </main>
+
+    <script src="admin.js"></script>
 </body>
 </html>
