@@ -5,307 +5,273 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUIZZ PURGE - Inscription</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
         :root {
-            --primary: #ff3e3e;
-            --secondary: #1a1a2e;
-            --accent: #e94560;
-            --text: #f1f1f1;
-            --bg: #16213e;
+            --neon-red: #ff3e3e;
+            --neon-pink: #e94560;
+            --dark-bg: #1a1a2e;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --text-light: #ffffff;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Orbitron', sans-serif;
         }
         
         body {
-            background-color: var(--bg);
-            color: var(--text);
+            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: var(--text-light);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 62, 62, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 20%);
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .register-container {
-            background-color: rgba(26, 26, 46, 0.8);
-            padding: 2.5rem;
-            border-radius: 10px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 450px;
+            background: var(--glass-bg);
             backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeIn 0.5s ease-in-out;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
         }
         
-        @keyframes fadeIn {
+        @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
         .logo {
             text-align: center;
-            margin-bottom: 2rem;
             font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        
-        .logo span {
-            color: var(--accent);
-        }
-        
-        h1 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            color: var(--text);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(to right, var(--neon-red), var(--neon-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
         .form-group {
             margin-bottom: 1.5rem;
-            position: relative;
         }
         
         label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--neon-pink);
         }
         
         input {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--text);
+            border-radius: 8px;
+            color: var(--text-light);
             font-size: 1rem;
-            transition: border-color 0.3s;
+            transition: all 0.3s ease;
         }
         
         input:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
         }
         
-        .password-strength {
-            height: 4px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            margin-top: 0.5rem;
-            overflow: hidden;
-        }
-        
-        .strength-bar {
-            height: 100%;
-            width: 0%;
-            background-color: var(--primary);
-            transition: width 0.3s;
-        }
-        
-        .password-hint {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 0.3rem;
-            display: none;
-        }
-        
-        .register-btn {
+        .btn {
             width: 100%;
             padding: 1rem;
-            background-color: var(--primary);
-            color: white;
             border: none;
-            border-radius: 4px;
-            font-size: 1rem;
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, var(--neon-red), var(--neon-pink));
+            color: var(--text-light);
+            margin-top: 1rem;
         }
         
-        .register-btn:hover {
-            background-color: var(--accent);
-            transform: translateY(-2px);
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
         }
         
         .login-link {
             text-align: center;
             margin-top: 1.5rem;
-            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
         }
         
         .login-link a {
-            color: var(--primary);
+            color: var(--neon-pink);
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
         }
         
         .login-link a:hover {
-            color: var(--accent);
+            text-decoration: underline;
         }
         
         .error-message {
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 1rem;
+            color: var(--neon-red);
             font-size: 0.9rem;
+            margin-top: 0.5rem;
             display: none;
         }
         
         .success-message {
-            color: #4caf50;
-            text-align: center;
-            margin-bottom: 1rem;
+            color: #00ff88;
             font-size: 0.9rem;
+            margin-top: 0.5rem;
             display: none;
         }
         
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .register-container {
                 padding: 1.5rem;
-                margin: 1rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="register-container">
-        <div class="logo">QUIZZ <span>PURGE</span></div>
-        <h1>Créer un compte</h1>
-        
-        <div class="error-message" id="errorMessage"></div>
-        <div class="success-message" id="successMessage"></div>
+        <div class="logo">QUIZZ PURGE</div>
         
         <form id="registerForm">
             <div class="form-group">
                 <label for="username">Nom d'utilisateur</label>
-                <input type="text" id="username" name="username" required autocomplete="off">
+                <input type="text" id="username" name="username" required>
+                <div class="error-message" id="usernameError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error-message" id="emailError"></div>
             </div>
             
             <div class="form-group">
                 <label for="password">Mot de passe</label>
                 <input type="password" id="password" name="password" required>
-                <div class="password-strength">
-                    <div class="strength-bar" id="strengthBar"></div>
-                </div>
-                <div class="password-hint" id="passwordHint">
-                    Le mot de passe doit contenir au moins 6 caractères
-                </div>
+                <div class="error-message" id="passwordError"></div>
             </div>
             
             <div class="form-group">
                 <label for="confirmPassword">Confirmer le mot de passe</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div class="error-message" id="confirmPasswordError"></div>
             </div>
             
-            <button type="submit" class="register-btn">S'inscrire</button>
+            <button type="submit" class="btn">S'inscrire</button>
+            <div class="success-message" id="successMessage"></div>
         </form>
         
         <div class="login-link">
-            Déjà un compte ? <a href="login.html">Se connecter</a>
+            Déjà un compte ? <a href="#" onclick="goToPage('/login')">Se connecter</a>
         </div>
     </div>
-    
+
     <script>
-        // Vérification de la force du mot de passe
-        document.getElementById('password').addEventListener('input', function() {
-            const password = this.value;
-            const strengthBar = document.getElementById('strengthBar');
-            const hint = document.getElementById('passwordHint');
-            
-            // Calcul de la force (simplifié)
-            let strength = 0;
-            if (password.length > 0) strength += 20;
-            if (password.length >= 6) strength += 20;
-            if (/[A-Z]/.test(password)) strength += 20;
-            if (/[0-9]/.test(password)) strength += 20;
-            if (/[^A-Za-z0-9]/.test(password)) strength += 20;
-            
-            strengthBar.style.width = strength + '%';
-            
-            // Changement de couleur en fonction de la force
-            if (strength < 40) {
-                strengthBar.style.backgroundColor = '#ff3e3e';
-            } else if (strength < 80) {
-                strengthBar.style.backgroundColor = '#ffcc00';
-            } else {
-                strengthBar.style.backgroundColor = '#4caf50';
-            }
-            
-            // Affichage de l'indice
-            hint.style.display = password.length > 0 ? 'block' : 'none';
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.register-container').style.opacity = 1;
         });
-        
-        // Soumission du formulaire
-        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const username = document.getElementById('username').value.trim();
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
             
-            const errorMessage = document.getElementById('errorMessage');
-            const successMessage = document.getElementById('successMessage');
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
             
-            // Validation
-            errorMessage.style.display = 'none';
-            successMessage.style.display = 'none';
+            let isValid = true;
+            
+            if (!username) {
+                document.getElementById('usernameError').textContent = "Veuillez entrer un nom d'utilisateur";
+                document.getElementById('usernameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!email) {
+                document.getElementById('emailError').textContent = "Veuillez entrer une adresse email";
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+                document.getElementById('emailError').textContent = "Veuillez entrer une adresse email valide";
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!password) {
+                document.getElementById('passwordError').textContent = "Veuillez entrer un mot de passe";
+                document.getElementById('passwordError').style.display = 'block';
+                isValid = false;
+            } else if (password.length < 6) {
+                document.getElementById('passwordError').textContent = "Le mot de passe doit contenir au moins 6 caractères";
+                document.getElementById('passwordError').style.display = 'block';
+                isValid = false;
+            }
             
             if (password !== confirmPassword) {
-                errorMessage.textContent = 'Les mots de passe ne correspondent pas';
-                errorMessage.style.display = 'block';
-                return;
+                document.getElementById('confirmPasswordError').textContent = "Les mots de passe ne correspondent pas";
+                document.getElementById('confirmPasswordError').style.display = 'block';
+                isValid = false;
             }
             
-            if (password.length < 6) {
-                errorMessage.textContent = 'Le mot de passe doit contenir au moins 6 caractères';
-                errorMessage.style.display = 'block';
-                return;
-            }
+            if (!isValid) return;
             
+            // Simulation d'inscription réussie
             try {
-                const response = await fetch('/api/auth/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ username, password })
-                });
+                // En production, vous feriez une requête à votre API
+                document.getElementById('successMessage').textContent = "Inscription réussie ! Redirection...";
+                document.getElementById('successMessage').style.display = 'block';
                 
-                const data = await response.json();
-                
-                if (response.ok) {
-                    successMessage.textContent = 'Compte créé avec succès ! Redirection...';
-                    successMessage.style.display = 'block';
-                    
-                    // Stocker le token et rediriger après 2 secondes
-                    localStorage.setItem('quizzPurgeToken', data.token);
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 2000);
-                } else {
-                    errorMessage.textContent = data.message || 'Erreur lors de l\'inscription';
-                    errorMessage.style.display = 'block';
-                }
-            } catch (err) {
-                errorMessage.textContent = 'Erreur de connexion au serveur';
-                errorMessage.style.display = 'block';
-                console.error(err);
+                setTimeout(() => {
+                    goToPage('/login');
+                }, 1500);
+            } catch (error) {
+                document.getElementById('usernameError').textContent = "Ce nom d'utilisateur est déjà pris";
+                document.getElementById('usernameError').style.display = 'block';
             }
         });
+
+        function goToPage(url) {
+            document.querySelector('.register-container').style.animation = 'fadeOut 0.5s ease-out forwards';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+        }
+
+        // Ajout de l'animation fadeOut
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fadeOut {
+                to { opacity: 0; transform: translateY(20px); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
