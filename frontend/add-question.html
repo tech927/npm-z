@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZZ PURGE - Ajouter une question</title>
+    <style>
+        :root {
+            --primary: #ff3e3e;
+            --secondary: #1a1a2e;
+            --accent: #e94560;
+            --text: #f1f1f1;
+            --bg: #16213e;
+            --card-bg: rgba(26, 26, 46, 0.6);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 62, 62, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 20%);
+        }
+        
+        header {
+            background-color: rgba(26, 26, 46, 0.8);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .back-btn {
+            background-color: transparent;
+            color: var(--text);
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .option-radio {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option-radio:checked {
+            border-color: var(--primary);
+            background-color: var(--primary);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        .success-message {
+            color: #4caf50;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .error-message {
+            color: var(--primary);
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="back-btn" id="backBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Retour
+        </button>
+        <div class="logo">QUIZZ <span>PURGE</span></div>
+        <div style="width: 100px;"></div> <!-- Pour l'équilibrage -->
+    </header>
+    
+    <main>
+        <div class="card">
+            <h1>Ajouter une question</h1>
+            
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+            
+            <form id="questionForm">
+                <div class="form-group">
+                    <label for="question">Question</label>
+                    <textarea id="question" name="question" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Options de réponse (cochez la bonne réponse)</label>
+                    
+                    <div class="option-item">
+                        <input type="radio" name="correctAnswer" value="0" class="option-radio" required>
+                        <input type="text" id="option1" name="options[]" placeholder="Option 1" required>
+                    </div>
+                    
+                    <div class="option-item">
+                        <input type="radio" name="correctAnswer" value="1" class="option-radio">
+                        <input type="text" id="option2" name="options[]" placeholder="Option 2" required>
+                    </div>
+                    
+                    <div class="option-item">
+                        <input type="radio" name="correctAnswer" value="2" class="option-radio">
+                        <input type="text" id="option3" name="options[]" placeholder="Option 3" required>
+                    </div>
+                    
+                    <div class="option-item">
+                        <input type="radio" name="correctAnswer" value="3" class="option-radio">
+                        <input type="text" id="option4" name="options[]" placeholder="Option 4" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">Soumettre la question</button>
+            </form>
+        </div>
+    </main>
+    
+    <script>
+        document.getElementById('backBtn').addEventListener('click', () => {
+            window.location.href = 'dashboard.html';
+        });
+        
+        document.getElementById('questionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const question = document.getElementById('question').value.trim();
+            const options = [
+                document.getElementById('option1').value.trim(),
+                document.getElementById('option2').value.trim(),
+                document.getElementById('option3').value.trim(),
+                document.getElementById('option4').value.trim()
+            ];
+            const correctAnswer = parseInt(document.querySelector('input[name="correctAnswer"]:checked').value);
+            
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            
+            // Validation
+            if (!question || options.some(opt => !opt)) {
+                errorMessage.textContent = 'Veuillez remplir tous les champs';
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                return;
+            }
+            
+            if (new Set(options).size !== options.length) {
+                errorMessage.textContent = 'Les options doivent être uniques';
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                return;
+            }
+            
+            try {
+                const token = localStorage.getItem('quizzPurgeToken');
+                const response = await fetch('/api/quiz/add-question', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ question, options, correctAnswer })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Erreur de soumission');
+                }
+                
+                // Afficher le succès
+                successMessage.textContent = 'Question ajoutée avec succès !';
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+                
+                // Réinitialiser le formulaire
+                this.reset();
+                
+                // Cacher le message après 3 secondes
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 3000);
+            } catch (err) {
+                errorMessage.textContent = err.message;
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                console.error(err);
+            }
+        });
+        
+        // Vérifier l'authentification
+        window.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('quizzPurgeToken');
+            if (!token) {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+  </html>
