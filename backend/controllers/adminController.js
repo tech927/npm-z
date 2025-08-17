@@ -1,7 +1,7 @@
-const User = require('../../models/User');
-const Question = require('../../models/Question');
-const Score = require('../../models/Score');
-const Message = require('../../models/Message');
+const User = require('../models/User');
+const Question = require('../models/Question');
+const Score = require('../models/Score');
+const Message = require('../models/Message');
 const asyncHandler = require('express-async-handler');
 
 // @desc    Send global message to all users
