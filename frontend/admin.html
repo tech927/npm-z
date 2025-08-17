@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZZ PURGE - Admin</title>
+    <style>
+        :root {
+            --primary: #ff3e3e;
+            --secondary: #1a1a2e;
+            --accent: #e94560;
+            --text: #f1f1f1;
+            --bg: #16213e;
+            --card-bg: rgba(26, 26, 46, 0.6);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 62, 62, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(233, 69, 96, 0.1) 0%, transparent 20%);
+        }
+        
+        .admin-container {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            font-size: 1rem;
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        .error-message {
+            color: var(--primary);
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .success-message {
+            color: #4caf50;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .admin-stats {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-item {
+            margin-bottom: 1rem;
+        }
+        
+        .stat-label {
+            font-weight: bold;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="logo">QUIZZ <span>PURGE</span></div>
+        <h1>Panneau d'administration</h1>
+        
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+        
+        <form id="adminForm">
+            <div class="form-group">
+                <label for="adminPassword">Mot de passe admin</label>
+                <input type="password" id="adminPassword" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="globalMessage">Message global</label>
+                <textarea id="globalMessage" placeholder="Ce message sera visible par tous les utilisateurs dans leur dashboard"></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Envoyer le message</button>
+        </form>
+        
+        <div class="admin-stats">
+            <div class="stat-item">
+                <div class="stat-label">Utilisateurs inscrits:</div>
+                <div id="usersCount">--</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Questions en base:</div>
+                <div id="questionsCount">--</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Parties jouées:</div>
+                <div id="gamesCount">--</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('adminForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('adminPassword').value;
+            const message = document.getElementById('globalMessage').value.trim();
+            
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            
+            if (password !== "inconnu-tech-web") {
+                errorMessage.textContent = 'Mot de passe admin incorrect';
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                return;
+            }
+            
+            if (!message) {
+                errorMessage.textContent = 'Veuillez entrer un message';
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/admin/send-message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message })
+                });
+                
+                if (!response.ok) throw new Error('Erreur d\'envoi du message');
+                
+                successMessage.textContent = 'Message envoyé à tous les utilisateurs !';
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+                
+                // Charger les stats
+                loadAdminStats();
+            } catch (err) {
+                errorMessage.textContent = err.message;
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+                console.error(err);
+            }
+        });
+        
+        // Charger les statistiques admin
+        async function loadAdminStats() {
+            try {
+                const response = await fetch('/api/admin/stats');
+                if (!response.ok) throw new Error('Erreur de chargement des stats');
+                
+                const stats = await response.json();
+                document.getElementById('usersCount').textContent = stats.usersCount;
+                document.getElementById('questionsCount').textContent = stats.questionsCount;
+                document.getElementById('gamesCount').textContent = stats.gamesCount;
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        
+        // Charger les stats au démarrage
+        window.addEventListener('DOMContentLoaded', loadAdminStats);
+    </script>
+</body>
+</html>
