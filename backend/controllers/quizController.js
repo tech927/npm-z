@@ -1,6 +1,6 @@
-const Question = require('../../models/Question');
-const Score = require('../../models/Score');
-const User = require('../../models/User');
+const Question = require('../models/Question');
+const Score = require('../models/Score');
+const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 
 // @desc    Get random questions
